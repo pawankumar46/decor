@@ -306,7 +306,7 @@ const ListOfItems = () => {
             </div>
             </a>
            
-          <a href="/gallery" rel="noopener noreferrer">
+          <a href="/gallery/wedding" rel="noopener noreferrer">
             <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-pink-50 to-red-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
@@ -323,7 +323,7 @@ const ListOfItems = () => {
 
           </a>
             
-            <a href="/gallery" rel="noopener noreferrer">
+            <a href="/gallery/birthday" rel="noopener noreferrer">
             <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-yellow-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
@@ -339,7 +339,7 @@ const ListOfItems = () => {
             </div>
             </a>
             
-            <a href="/gallery" rel="noopener noreferrer">
+            <a href="/gallery/sangeet" rel="noopener noreferrer">
             <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
               {/* Hover background gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-yellow-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -363,7 +363,7 @@ const ListOfItems = () => {
             </a>
             
 
-            <a href="/gallery" rel="noopener noreferrer">
+            <a href="/gallery/cradle" rel="noopener noreferrer">
             <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-cyan-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
@@ -379,7 +379,7 @@ const ListOfItems = () => {
             </div></a>
             
 
-            <a href="/gallery" rel="noopener noreferrer">
+            <a href="/gallery/engagement" rel="noopener noreferrer">
              <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-pink-50 to-rose-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
@@ -394,7 +394,7 @@ const ListOfItems = () => {
               </div>
             </div></a>
            
-            <a href="/gallery" rel="noopener noreferrer">
+            <a href="/gallery/seemantham" rel="noopener noreferrer">
              <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
               {/* Hover background gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -417,7 +417,7 @@ const ListOfItems = () => {
             </div></a>
            
 
-            <a href="/gallery" rel="noopener noreferrer">
+            <a href="/gallery/gruhapravesha" rel="noopener noreferrer">
             <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-yellow-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">

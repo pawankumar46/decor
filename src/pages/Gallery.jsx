@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import picHw from '../Images/HouseWarming/pic2.jpeg'
 const Gallery = () => {
   const navigate = useNavigate();
 
@@ -11,7 +11,7 @@ const Gallery = () => {
       title: "Gruhapravesha Ceremony", 
       description: "Sacred decorations for house warming ceremony with traditional elements.",
       eventType: "gruhapravesha",
-      image: '/src/Images/HouseWarming/pic2.jpeg'
+      image: picHw
     },
     { 
       id: 2, 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import pic1Hw from '../Images/HouseWarming/pic2.jpeg'
 
 const DetailedGallery = () => {
   const { eventType } = useParams();
@@ -14,7 +15,7 @@ const DetailedGallery = () => {
       photos: [
         {
           id: 1,
-          url: '/src/Images/HouseWarming/pic2.jpeg',
+          url: pic1Hw,
 
         },
         {

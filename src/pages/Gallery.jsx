@@ -1,6 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import picHw from '../Images/HouseWarming/pic2.jpeg'
+import picBw from "../assets/BabyShower/pic1.jpeg"
+import picBirth from '../assets/Birthday/pic1.jpeg'
+import picName from '../assets/NamingCeremony/pic1.jpeg'
+import picSan  from '../assets/Sangeet/pic1.jpeg'
+import picWed from '../assets/Wedding/pic1.jpeg'
+import picEng from '../assets/Engagement/pic1.jpeg'
+
 const Gallery = () => {
   const navigate = useNavigate();
 
@@ -19,7 +26,7 @@ const Gallery = () => {
       description: "A joyful burst of colorful flowers, crafted to spread smiles and celebrate special days.",
       eventType: "birthday",
       imageCount: 3,
-      image: '/src/assets/Birthday/pic1.jpeg'
+      image: picBirth
     },
     { 
       id: 3, 
@@ -27,7 +34,7 @@ const Gallery = () => {
       description: "Gentle white lilies and fresh greenery, representing purity and blessings for the newborn.",
       eventType: "cradle",
       imageCount: 2,
-      image: '/src/assets/NamingCeremony/pic1.jpeg'
+      image: picName
     },
     { 
       id: 4, 
@@ -35,7 +42,7 @@ const Gallery = () => {
       description: "Traditional red roses and festive blooms to honor motherhood and auspicious beginnings.",
       eventType: "seemantham",
       imageCount: 3,
-      image: '/src/assets/BabyShower/pic1.jpeg'
+      image: picBw
     },
     { 
       id: 5, 
@@ -43,7 +50,7 @@ const Gallery = () => {
       description: "Romantic tulips and daffodils, setting the stage for love and togetherness.",
       eventType: "engagement",
       imageCount: 4,
-      image: '/src/assets/Engagement/pic1.jpeg'
+      image: picEng
     },
     { 
       id: 6, 
@@ -51,7 +58,7 @@ const Gallery = () => {
       description: "Vibrant marigolds and festive accents.",
       eventType: "sangeet",
       imageCount: 3,
-      image: '/src/assets/Sangeet/pic1.jpeg'
+      image: picSan
     },
     { 
       id: 7, 
@@ -59,7 +66,7 @@ const Gallery = () => {
       description: "Grand floral arches with roses and orchids, creating an unforgettable wedding ambience.",
       eventType: "wedding",
       imageCount: 5,
-      image: '/src/assets/Wedding/pic1.jpeg'
+      image: picWed
     },
     
   ];

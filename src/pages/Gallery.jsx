@@ -11,7 +11,7 @@ const Gallery = () => {
       title: "Gruhapravesha Ceremony", 
       description: "Sacred decorations for house warming ceremony with traditional elements.",
       eventType: "gruhapravesha",
-      image: '/src/assets/HouseWarming/pic2.jpeg'
+      image: '/src/Images/HouseWarming/pic2.jpeg'
     },
     { 
       id: 2, 

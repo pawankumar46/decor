@@ -14,157 +14,157 @@ const DetailedGallery = () => {
       photos: [
         {
           id: 1,
-          url: '/src/assets/HouseWarming/pic2.jpeg',
+          url: '/src/Images/HouseWarming/pic2.jpeg',
 
         },
         {
           id: 2,
-          url: '/src/assets/HouseWarming/pic3.jpeg',
+          url: '/src/Images/HouseWarming/pic3.jpeg',
 
         },
         {
           id: 3,
-          url: '/src/assets/HouseWarming/pic4.jpeg',
+          url: '/src/Images/HouseWarming/pic4.jpeg',
 
         },
         {
           id: 4,
-          url: '/src/assets/HouseWarming/pic5.jpeg',
+          url: '/src/Images/HouseWarming/pic5.jpeg',
 
         },
         {
           id: 5,
-          url: '/src/assets/HouseWarming/pic6.jpeg',
+          url: '/src/Images/HouseWarming/pic6.jpeg',
 
         },
         {
           id: 6,
-          url: '/src/assets/HouseWarming/pic7.jpeg',
+          url: '/src/Images/HouseWarming/pic7.jpeg',
 
         },
         {
           id: 7,
-          url: '/src/assets/HouseWarming/pic8.jpeg',
+          url: '/src/Images/HouseWarming/pic8.jpeg',
 
         },
         {
           id: 8,
-          url: '/src/assets/HouseWarming/pic9.jpeg',
+          url: '/src/Images/HouseWarming/pic9.jpeg',
 
         },
         {
           id: 9,
-          url: '/src/assets/HouseWarming/pic10.jpeg',
+          url: '/src/Images/HouseWarming/pic10.jpeg',
 
         },
         {
           id: 10,
-          url: '/src/assets/HouseWarming/pic11.jpeg',
+          url: '/src/Images/HouseWarming/pic11.jpeg',
 
         },
         {
           id: 11,
-          url: '/src/assets/HouseWarming/pic12.jpeg',
+          url: '/src/Images/HouseWarming/pic12.jpeg',
 
         },
         {
           id: 12,
-          url: '/src/assets/HouseWarming/pic14.jpeg',
+          url: '/src/Images/HouseWarming/pic14.jpeg',
 
         },
         {
           id: 13,
-          url: '/src/assets/HouseWarming/pic15.jpeg',
+          url: '/src/Images/HouseWarming/pic15.jpeg',
 
         },
         {
           id: 14,
-          url: '/src/assets/HouseWarming/pic16.jpeg',
+          url: '/src/Images/HouseWarming/pic16.jpeg',
 
         },
         {
           id: 15,
-          url: '/src/assets/HouseWarming/pic17.jpeg',
+          url: '/src/Images/HouseWarming/pic17.jpeg',
 
         },
         {
           id: 16,
-          url: '/src/assets/HouseWarming/pic18.jpeg',
+          url: '/src/Images/HouseWarming/pic18.jpeg',
 
         },
         {
           id: 17,
-          url: '/src/assets/HouseWarming/pic21.jpeg',
+          url: '/src/Images/HouseWarming/pic21.jpeg',
 
         },
         {
           id: 18,
-          url: '/src/assets/HouseWarming/pic22.jpeg',
+          url: '/src/Images/HouseWarming/pic22.jpeg',
 
         },
         {
           id: 19,
-          url: '/src/assets/HouseWarming/pic24.jpeg',
+          url: '/src/Images/HouseWarming/pic24.jpeg',
 
         },
         {
           id: 20,
-          url: '/src/assets/HouseWarming/pic25.jpeg',
+          url: '/src/Images/HouseWarming/pic25.jpeg',
 
         },
         {
           id: 21,
-          url: '/src/assets/HouseWarming/pic27.jpeg',
+          url: '/src/Images/HouseWarming/pic27.jpeg',
 
         },
         {
           id: 22,
-          url: '/src/assets/HouseWarming/pic28.jpeg',
+          url: '/src/Images/HouseWarming/pic28.jpeg',
 
         },
         {
           id: 23,
-          url: '/src/assets/HouseWarming/pic29.jpeg',
+          url: '/src/Images/HouseWarming/pic29.jpeg',
 
         },
         {
           id: 24,
-          url: '/src/assets/HouseWarming/pic30.jpeg',
+          url: '/src/Images/HouseWarming/pic30.jpeg',
 
         },
         {
           id: 25,
-          url: '/src/assets/HouseWarming/pic31.jpeg',
+          url: '/src/Images/HouseWarming/pic31.jpeg',
 
         },
         {
           id: 26,
-          url: '/src/assets/HouseWarming/pic32.jpeg',
+          url: '/src/Images/HouseWarming/pic32.jpeg',
 
         },
         {
           id: 27,
-          url: '/src/assets/HouseWarming/pic33.jpeg',
+          url: '/src/Images/HouseWarming/pic33.jpeg',
 
         },
         {
           id: 28,
-          url: '/src/assets/HouseWarming/pic34.jpeg',
+          url: '/src/Images/HouseWarming/pic34.jpeg',
 
         },
         {
           id: 29,
-          url: '/src/assets/HouseWarming/pic35.jpeg',
+          url: '/src/Images/HouseWarming/pic35.jpeg',
 
         },
         {
           id: 30,
-          url: '/src/assets/HouseWarming/pic36.jpeg',
+          url: '/src/Images/HouseWarming/pic36.jpeg',
 
         },
         {
           id: 31,
-          url: '/src/assets/HouseWarming/pic37.jpeg',
+          url: '/src/Images/HouseWarming/pic37.jpeg',
 
         },
 
@@ -661,7 +661,7 @@ const DetailedGallery = () => {
               {/* Navigation Arrows */}
               <button
                 onClick={prevImage}
-                className="absolute left-4  text-black top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                className="absolute left-4  text-black top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -670,7 +670,7 @@ const DetailedGallery = () => {
 
               <button
                 onClick={nextImage}
-                className="absolute right-4  text-black top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                className="absolute right-4  text-black top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

@@ -26,8 +26,8 @@ const NavBar = () => {
               className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold italic hover:scale-105 transform transition duration-300 truncate"
               style={{ color: '#2b6777' }}
             >
-              <span className="hidden xs:inline">🌸 Sri Venkateshwara Florist</span>
-              <span className="xs:hidden">🌸 SVF</span>
+              <span className="hidden sm:inline">🌸 Sri Venkateshwara Florist</span>
+              <span className="sm:hidden">🌸 SVF</span>
             </NavLink>
           </div>
 

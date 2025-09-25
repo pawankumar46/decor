@@ -12,7 +12,7 @@ const ListOfItems = () => {
       id: 1,
       title: "Honganasu Party Hall",
       description: "Versatile hall with themed décor and vibrant celebrations.",
-      image: "💐",
+      image: "https://lh3.googleusercontent.com/p/AF1QipNPSEc88Vo3g9leSKB_5Mg6YtimueCQcftnriih=s1360-w1360-h1020-rw",
       tags: ["Engagement", "Seemantha", "Birthday"],
       rating: 4.9,
       colors: ["Gold", "Red", "Cream"],
@@ -21,16 +21,12 @@ const ListOfItems = () => {
       gradient: "from-yellow-200 to-orange-300",
       productDetails: [
 
-        "Height: 10 ft",
-        "Material: Teak wood & silk",
-        "Includes fresh marigold flower decorations",
-        "Customizable color theme to match wedding decor",
-        "Portable and easy to assemble",
-        "Intricate traditional carvings on pillars",
-        "Can accommodate up to 8 people comfortably",
-        "Perfect for both indoor and outdoor weddings",
-        "Durable and reusable for multiple events",
-        "Optional lighting setup for evening ceremonies"
+        "Height: 10 ft Backdrop",
+      "Material: Teak wood & silk",
+      "Includes fresh marigold flower decorations",
+      "Customizable color theme to match event decor",
+      "Intricate traditional carvings on pillars",
+      "Optional lighting setup for evening ceremonies"
 
       ]
     },
@@ -38,7 +34,7 @@ const ListOfItems = () => {
       id: 2,
       title: "Hotel Nandini",
       description: "Elegant halls with floral arches and creative décor for every event.",
-      image: "🍽️",
+      image: "https://nandhini.com/wp-content/uploads/2022/10/nandhini-logo-removebg-preview-e1666141300990.png",
       tags: ["Restaurant", "Party", "Modern Style"],
       rating: 4.8,
       colors: ["White", "Pink", "Green"],
@@ -47,24 +43,13 @@ const ListOfItems = () => {
       gradient: "from-pink-200 to-green-300",
       productDetails: [
 
-        "Height: 10 ft",
-        "Material: Teak wood & silk",
-        "Includes fresh marigold flower decorations",
-        "Customizable color theme to match wedding decor",
-        "Portable and easy to assemble",
-        "Intricate traditional carvings on pillars",
-        "Can accommodate up to 8 people comfortably",
-        "Perfect for both indoor and outdoor weddings",
-        "Durable and reusable for multiple events",
-        "Optional lighting setup for evening ceremonies"
-
       ]
     },
     {
       id: 3,
       title: "Beach Wedding Setup",
       description: "Coastal themed decoration with driftwood and white linens",
-      image: "🏖️",
+      image: "https://images.unsplash.com/photo-1681238325543-7477b5f9445a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tags: ["Wedding"],
       rating: 4.7,
       colors: ["White", "Blue", "Beige"],
@@ -73,24 +58,13 @@ const ListOfItems = () => {
       gradient: "from-blue-200 to-cyan-300",
       productDetails: [
 
-        "Height: 10 ft",
-        "Material: Teak wood & silk",
-        "Includes fresh marigold flower decorations",
-        "Customizable color theme to match wedding decor",
-        "Portable and easy to assemble",
-        "Intricate traditional carvings on pillars",
-        "Can accommodate up to 8 people comfortably",
-        "Perfect for both indoor and outdoor weddings",
-        "Durable and reusable for multiple events",
-        "Optional lighting setup for evening ceremonies"
-
       ]
     },
     {
       id: 4,
       title: "Princess Birthday Theme",
       description: "Magical princess castle setup with pink and gold balloons",
-      image: "🎈",
+      image: "https://i.pinimg.com/736x/3f/fa/78/3ffa78a936c414377e5a47469b38baf8.jpg",
       tags: ["Popular", "Birthday"],
       rating: 4.6,
       colors: ["Pink", "Gold", "Purple"],
@@ -99,16 +73,6 @@ const ListOfItems = () => {
       gradient: "from-pink-200 to-purple-300",
       productDetails: [
 
-        "Height: 10 ft",
-        "Material: Teak wood & silk",
-        "Includes fresh marigold flower decorations",
-        "Customizable color theme to match wedding decor",
-        "Portable and easy to assemble",
-        "Intricate traditional carvings on pillars",
-        "Can accommodate up to 8 people comfortably",
-        "Perfect for both indoor and outdoor weddings",
-        "Durable and reusable for multiple events",
-        "Optional lighting setup for evening ceremonies"
 
       ]
     },
@@ -116,7 +80,7 @@ const ListOfItems = () => {
       id: 5,
       title: "Superhero Party Decor",
       description: "Action-packed superhero themed decoration",
-      image: "🦸",
+      image: "https://images.unsplash.com/photo-1637724562261-5777b67c59b2?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tags: ["Birthday"],
       rating: 4.5,
       colors: ["Blue", "Red", "Yellow"],
@@ -125,24 +89,14 @@ const ListOfItems = () => {
       gradient: "from-blue-200 to-red-300",
       productDetails: [
 
-        "Height: 10 ft",
-        "Material: Teak wood & silk",
-        "Includes fresh marigold flower decorations",
-        "Customizable color theme to match wedding decor",
-        "Portable and easy to assemble",
-        "Intricate traditional carvings on pillars",
-        "Can accommodate up to 8 people comfortably",
-        "Perfect for both indoor and outdoor weddings",
-        "Durable and reusable for multiple events",
-        "Optional lighting setup for evening ceremonies"
-
+       
       ]
     },
     {
       id: 6,
       title: "Elegant Adult Birthday",
       description: "Sophisticated black and gold theme for adults",
-      image: "🎂",
+      image: "https://images.unsplash.com/photo-1626149136691-78e3977b3d69?q=80&w=1150&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tags: ["Popular", "Birthday"],
       rating: 4.8,
       colors: ["Black", "Gold", "White"],
@@ -151,16 +105,7 @@ const ListOfItems = () => {
       gradient: "from-gray-200 to-yellow-200",
       productDetails: [
 
-        "Height: 10 ft",
-        "Material: Teak wood & silk",
-        "Includes fresh marigold flower decorations",
-        "Customizable color theme to match wedding decor",
-        "Portable and easy to assemble",
-        "Intricate traditional carvings on pillars",
-        "Can accommodate up to 8 people comfortably",
-        "Perfect for both indoor and outdoor weddings",
-        "Durable and reusable for multiple events",
-        "Optional lighting setup for evening ceremonies"
+       
 
       ]
     },
@@ -168,7 +113,7 @@ const ListOfItems = () => {
       id: 7,
       title: "Golden Anniversary Setup",
       description: "Luxurious golden anniversary celebration",
-      image: "👑",
+      image: "https://plus.unsplash.com/premium_photo-1670333351949-47f735fa9ba4?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tags: ["Popular", "Anniversary"],
       rating: 4.9,
       colors: ["Gold", "Orange", "White"],
@@ -177,16 +122,6 @@ const ListOfItems = () => {
       gradient: "from-yellow-200 to-orange-300",
       productDetails: [
 
-        "Height: 10 ft",
-        "Material: Teak wood & silk",
-        "Includes fresh marigold flower decorations",
-        "Customizable color theme to match wedding decor",
-        "Portable and easy to assemble",
-        "Intricate traditional carvings on pillars",
-        "Can accommodate up to 8 people comfortably",
-        "Perfect for both indoor and outdoor weddings",
-        "Durable and reusable for multiple events",
-        "Optional lighting setup for evening ceremonies"
 
       ]
     },
@@ -194,7 +129,7 @@ const ListOfItems = () => {
       id: 8,
       title: "Silver Jubilee Decor",
       description: "Classic silver themed decoration for 25th anniversary",
-      image: "🏆",
+      image: "https://i.pinimg.com/736x/c8/d6/6f/c8d66f7cef63a3fc5d1fa231d2979c7f.jpg",
       tags: ["Anniversary"],
       rating: 4.7,
       colors: ["Silver", "Blue", "White"],
@@ -203,16 +138,6 @@ const ListOfItems = () => {
       gradient: "from-gray-200 to-blue-200",
       productDetails: [
 
-        "Height: 10 ft",
-        "Material: Teak wood & silk",
-        "Includes fresh marigold flower decorations",
-        "Customizable color theme to match wedding decor",
-        "Portable and easy to assemble",
-        "Intricate traditional carvings on pillars",
-        "Can accommodate up to 8 people comfortably",
-        "Perfect for both indoor and outdoor weddings",
-        "Durable and reusable for multiple events",
-        "Optional lighting setup for evening ceremonies"
 
       ]
     }
@@ -455,9 +380,16 @@ const ListOfItems = () => {
             {filteredDecorations.map((decoration) => (
               <div key={decoration.id} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
                 <div className="relative">
-                  <div className={`w-full h-64 bg-gradient-to-br ${decoration.gradient} flex items-center justify-center`}>
-                    <span className="text-6xl">{decoration.image}</span>
-                  </div>
+                 <div className={`w-full h-48 bg-gradient-to-br ${decoration.gradient} flex items-center justify-center overflow-hidden`}>
+  <img
+    src={decoration.image}
+    alt={decoration.title}
+    className="w-full h-48 object-cover rounded-t-2xl"
+  />
+</div>
+
+
+
                   <div className="absolute top-3 left-3 flex gap-2">
                     {decoration.tags.map((tag, index) => (
                       <span
@@ -512,6 +444,7 @@ const ListOfItems = () => {
                   </div>
                   <div className="flex gap-2">
                     <button
+                      onClick={()=> navigate('/decordetails', { state: { decoration: decoration } })}
                       className="flex-1 text-white py-0.5 px-2 rounded-md transition-all duration-300 text-xs"
                       style={{ background: 'linear-gradient(90deg, #2b6777, #52ab98)' }}
                     >

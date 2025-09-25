@@ -8,6 +8,7 @@ import Contact from './pages/Contact'
 import Gallery from './pages/Gallery'
 import DetailedGallery from './pages/DetailedGallery'
 import ListOfItems from './components/ListOfItems'
+import DecorDetails from './components/DecorDetails'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/gallery/:eventType" element={<DetailedGallery />} />
             <Route path="/items" element={<ListOfItems />} />
+            <Route path="/decordetails" element={<DecorDetails/>} />
           </Routes>
         </main>
         <Footer />

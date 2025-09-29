@@ -47,9 +47,9 @@ const ListOfItems = () => {
     },
     {
       id: 3,
-      title: "Beach Wedding Setup",
-      description: "Coastal themed decoration with driftwood and white linens",
-      image: "https://images.unsplash.com/photo-1681238325543-7477b5f9445a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      title: "KSBA",
+      description: "An association known for elegant coastal-themed decorations",
+      image: "https://www.myksba.com/img/carousel-1.jpg",
       tags: ["Wedding"],
       rating: 4.7,
       colors: ["White", "Blue", "Beige"],
@@ -62,9 +62,9 @@ const ListOfItems = () => {
     },
     {
       id: 4,
-      title: "Princess Birthday Theme",
-      description: "Magical princess castle setup with pink and gold balloons",
-      image: "https://i.pinimg.com/736x/3f/fa/78/3ffa78a936c414377e5a47469b38baf8.jpg",
+      title: "Chairman's Club",
+      description: "A premier club known for stylish birthday decorations and themes.",
+      image: "https://lh3.googleusercontent.com/p/AF1QipNJFro43Gl6XmD4hnZ3f01s6ApDaqNfQpsx5DOj=s1360-w1360-h1020-rw",
       tags: ["Popular", "Birthday"],
       rating: 4.6,
       colors: ["Pink", "Gold", "Purple"],
@@ -94,7 +94,7 @@ const ListOfItems = () => {
     },
     {
       id: 6,
-      title: "Elegant Adult Birthday",
+      title: "Elegant Birthday",
       description: "Sophisticated black and gold theme for adults",
       image: "https://images.unsplash.com/photo-1626149136691-78e3977b3d69?q=80&w=1150&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tags: ["Popular", "Birthday"],
@@ -111,7 +111,7 @@ const ListOfItems = () => {
     },
     {
       id: 7,
-      title: "Golden Anniversary Setup",
+      title: "Anniversary Setup",
       description: "Luxurious golden anniversary celebration",
       image: "https://plus.unsplash.com/premium_photo-1670333351949-47f735fa9ba4?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tags: ["Popular", "Anniversary"],

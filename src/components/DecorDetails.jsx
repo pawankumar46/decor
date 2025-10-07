@@ -5,6 +5,78 @@ import pic2Birth from '../assets/Birthday/pic2.jpeg'
 import pic1Bs from '../assets/BabyShower/pic1.jpeg'
 import pic2Bs from '../assets/BabyShower/pic2.jpeg'
 
+// Import Nandini images
+import pic3Nandini from '../assets/Nandini/pic3.jpeg'
+import pic4Nandini from '../assets/Nandini/pic4.jpeg'
+import pic5Nandini from '../assets/Nandini/pic5.jpeg'
+import pic6Nandini from '../assets/Nandini/pic6.jpeg'
+import pic7Nandini from '../assets/Nandini/pic7.jpeg'
+import pic8Nandini from '../assets/Nandini/pic8.jpeg'
+import pic9Nandini from '../assets/Nandini/pic9.jpeg'
+import pic10Nandini from '../assets/Nandini/pic10.jpeg'
+import pic11Nandini from '../assets/Nandini/pic11.jpeg'
+import pic12Nandini from '../assets/Nandini/pic12.jpeg'
+import pic13Nandini from '../assets/Nandini/pic13.jpeg'
+import pic14Nandini from '../assets/Nandini/pic14.jpeg'
+import pic15Nandini from '../assets/Nandini/pic15.jpeg'
+import pic17Nandini from '../assets/Nandini/pic17.jpeg'
+import pic18Nandini from '../assets/Nandini/pic18.jpeg'
+import pic19Nandini from '../assets/Nandini/pic19.jpeg'
+import pic20Nandini from '../assets/Nandini/pic20.jpeg'
+import pic21Nandini from '../assets/Nandini/pic21.jpeg'
+import pic22Nandini from '../assets/Nandini/pic22.jpeg'
+import pic23Nandini from '../assets/Nandini/pic23.jpeg'
+import pic24Nandini from '../assets/Nandini/pic24.jpeg'
+import pic25Nandini from '../assets/Nandini/pic25.jpeg'
+import pic26Nandini from '../assets/Nandini/pic26.jpeg'
+import pic27Nandini from '../assets/Nandini/pic27.jpeg'
+import pic28Nandini from '../assets/Nandini/pic28.jpeg'
+import pic29Nandini from '../assets/Nandini/pic29.jpeg'
+import pic30Nandini from '../assets/Nandini/pic30.jpeg'
+import pic31Nandini from '../assets/Nandini/pic31.jpeg'
+import pic32Nandini from '../assets/Nandini/pic32.jpeg'
+import pic33Nandini from '../assets/Nandini/pic33.jpeg'
+import pic34Nandini from '../assets/Nandini/pic34.jpeg'
+import pic35Nandini from '../assets/Nandini/pic35.jpeg'
+import pic36Nandini from '../assets/Nandini/pic36.jpeg'
+
+// Import KSBA images
+import pic1Ksba from '../assets/Ksba/pic1.jpeg'
+import pic2Ksba from '../assets/Ksba/pic2.jpeg'
+import pic3Ksba from '../assets/Ksba/pic3.jpeg'
+import pic4Ksba from '../assets/Ksba/pic4.jpeg'
+import pic5Ksba from '../assets/Ksba/pic5.jpeg'
+import pic6Ksba from '../assets/Ksba/pic6.jpeg'
+import pic7Ksba from '../assets/Ksba/pic7.jpeg'
+import pic8Ksba from '../assets/Ksba/pic8.jpeg'
+import pic9Ksba from '../assets/Ksba/pic9.jpeg'
+import pic10Ksba from '../assets/Ksba/pic10.jpeg'
+import pic11Ksba from '../assets/Ksba/pic11.jpeg'
+import pic12Ksba from '../assets/Ksba/pic12.jpeg'
+import pic13Ksba from '../assets/Ksba/pic13.jpeg'
+import pic14Ksba from '../assets/Ksba/pic14.jpeg'
+import pic15Ksba from '../assets/Ksba/pic15.jpeg'
+import pic16Ksba from '../assets/Ksba/pic16.jpeg'
+import pic18Ksba from '../assets/Ksba/pic18.jpeg'
+import pic19Ksba from '../assets/Ksba/pic19.jpeg'
+import pic20Ksba from '../assets/Ksba/pic20.jpeg'
+import pic21Ksba from '../assets/Ksba/pic21.jpeg'
+import pic22Ksba from '../assets/Ksba/pic22.jpeg'
+import pic23Ksba from '../assets/Ksba/pic23.jpeg'
+import pic24Ksba from '../assets/Ksba/pic24.jpeg'
+import pic25Ksba from '../assets/Ksba/pic25.jpeg'
+import pic26Ksba from '../assets/Ksba/pic26.jpeg'
+import pic27Ksba from '../assets/Ksba/pic27.jpeg'
+import pic28Ksba from '../assets/Ksba/pic28.jpeg'
+import pic29Ksba from '../assets/Ksba/pic29.jpeg'
+import pic30Ksba from '../assets/Ksba/pic30.jpeg'
+import pic31Ksba from '../assets/Ksba/pic31.jpeg'
+import pic32Ksba from '../assets/Ksba/pic32.jpeg'
+import pic33Ksba from '../assets/Ksba/pic33.jpeg'
+import pic34Ksba from '../assets/Ksba/pic34.jpeg'
+import pic35Ksba from '../assets/Ksba/pic35.jpeg'
+import pic36Ksba from '../assets/Ksba/pic36.jpeg'
+
 const DecorDetails = () => {
   const navigate = useNavigate()
   const location = useLocation()
@@ -14,7 +86,7 @@ const DecorDetails = () => {
     id: 1,
     title: "Honganasu Party Hall",
     description: "Versatile hall with themed décor and vibrant celebrations.",
-    image: "https://lh3.googleusercontent.com/p/AF1QipNPSEc88Vo3g9leSKB_5Mg6YtimueCQcftnriih=s1360-w1360-h1020-rw",
+    image: "https://drive.google.com/file/d/1yVftxloXQe5tYJYM4eMBR8r1I8PKZc_W/view?usp=drive_link",
     tags: ["Engagement", "Seemantha", "Birthday"],
     rating: 4.9,
     colors: ["Gold", "Red", "Cream"],
@@ -33,34 +105,119 @@ const DecorDetails = () => {
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   
-  // Check if this is Honganasu Party Hall for detailed view
+  // Check venue type for detailed view
   const isHonganasuHall = decorationData.title === "Honganasu Party Hall"
+  const isHotelNandini = decorationData.title === "Hotel Nandini" || decorationData.title.includes("Nandini")
+  const isKsba = decorationData.title === "KSBA" || decorationData.title.includes("KSBA")
   
-  // Sample gallery images (in a real app, this would come from the decoration data)
-  const galleryImages = isHonganasuHall ? [
-    decorationData.image,
-    "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq8Tmz1mTXD3FAdbhQCTGfOLz8GTl9yNYl3U_f620IMLP0QQPjo5dYx4UrgicGO_LqOUvw-9YYbazIuLWNAXmtTDWyjZyIv7lXPajFDvwXjQ2kuCB9uueaq-UdIiqEyj0bnR4c=s1360-w1360-h1020-rw",
-    "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nptwBjwQkdIbu9OS_T1Ed02dFc_FWbcUvQ4q4O816oUQXPq4ls3uP2iHNp6XcD2dr6_pmqukYvj8Lm4MpRrhQUvAoUJJA1sIlpyTQeY-IRJpjMLb1pGavxA3h8jCp2Hh6QBQnB-=s1360-w1360-h1020-rw",
-    pic1Birth,
-    pic1Bs,
-    pic2Birth,
-    pic2Bs,
-    "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqNgRR56RoR32Inf4wctJB2Np4yUZVvfqY3mXnKkgP0NNVzibTcHgrn6J4gb0BapQy2QP2nSITg6_S1Xmr21z01MDrFA1LK-DygwgH0GRtUECeTaC04zAnltE3lFq6GunhSjF1c=s1360-w1360-h1020-rw",
-    "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqkntEOA5XerfhKj4n9Xz5nyljBZb9Plmh0YVhjZBcsOjaMzvjbm5mc-4t9Wtkjbbmp64B7yjKlUGhhPV1LLwE0xoe85ZCVct_xuQqwr3ggkV018XTr7MPNGtUTZOy4pD43W1BD=s1360-w1360-h1020-rw",
-    "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noLsxW0J0XggkSR4z8HikfJ73fH725lzivCYJBrw-rnKlt4x4KgfDdqmRiaEBMA1awAdhfR5wx4VWdij4oIUK34Lyxj8cqWMbWvso_nPzrWOggyy0m7s8NtVpu1JdaBfePouiA4eQ=s1360-w1360-h1020-rw",
-    "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npnzqq-dL3zUeckLHIVheN4xWFyvGAgqTTr-vAwEJqki1je8DkpN6jlWbU-O7aCw551vGLHStxjFzU4LOUvuEmZ1QO9dBDCj_CplqxEyP5_uEmbNxyAE34sUQZK2vD54f1UD5ELrQ=s1360-w1360-h1020-rw",
-    "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrplT8uFiTYl_Iiqc2iRD1bZ5VCx25KYN20-plA1bkfJ_Q5jTmooOghyU9YqK5-U9mx_cQskF-rtGsT6q8rGePl7ofX4TA9P6ge9bVDNEiKHWpoU6r8XYRDQE3CeiF3B2nWww1fNA=s1360-w1360-h1020-rw",
-    "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqK2o8ZQNplwwSczk6oVAHTZTz5H0E8vfcRtAdx7HwZq8FtMTag9bbbhGhtkqR6a9rNVDpfQ3IRoGDUuVcW98fJbNQgZ_wtngiv9cJRy2KJqg-WjiopiKqYbwX6Qd-6YWiUs0Vh=s1360-w1360-h1020-rw",
-    "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqV5R5GQdNd4UnERvv8ZR2H-Jf_y8N-BAUZXxO1y1uVLpoRkWSYv3EyNdHjHJFQsz_PfqEkEBHxtdIcQxNLdTG9Anqls4EWudaK59iXOG9MlCEt-2duoLxmZjIN3R0Kjan_LWU87Tsza-I=s1360-w1360-h1020-rw",
-
-  ] : [decorationData.image]
+  // Create gallery images based on venue type
+  const getGalleryImages = () => {
+    if (isHonganasuHall) {
+      return [
+        decorationData.image,
+        "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq8Tmz1mTXD3FAdbhQCTGfOLz8GTl9yNYl3U_f620IMLP0QQPjo5dYx4UrgicGO_LqOUvw-9YYbazIuLWNAXmtTDWyjZyIv7lXPajFDvwXjQ2kuCB9uueaq-UdIiqEyj0bnR4c=s1360-w1360-h1020-rw",
+        "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nptwBjwQkdIbu9OS_T1Ed02dFc_FWbcUvQ4q4O816oUQXPq4ls3uP2iHNp6XcD2dr6_pmqukYvj8Lm4MpRrhQUvAoUJJA1sIlpyTQeY-IRJpjMLb1pGavxA3h8jCp2Hh6QBQnB-=s1360-w1360-h1020-rw",
+        pic1Birth,
+        pic1Bs,
+        pic2Birth,
+        pic2Bs,
+        "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqNgRR56RoR32Inf4wctJB2Np4yUZVvfqY3mXnKkgP0NNVzibTcHgrn6J4gb0BapQy2QP2nSITg6_S1Xmr21z01MDrFA1LK-DygwgH0GRtUECeTaC04zAnltE3lFq6GunhSjF1c=s1360-w1360-h1020-rw",
+        "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqkntEOA5XerfhKj4n9Xz5nyljBZb9Plmh0YVhjZBcsOjaMzvjbm5mc-4t9Wtkjbbmp64B7yjKlUGhhPV1LLwE0xoe85ZCVct_xuQqwr3ggkV018XTr7MPNGtUTZOy4pD43W1BD=s1360-w1360-h1020-rw",
+        "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noLsxW0J0XggkSR4z8HikfJ73fH725lzivCYJBrw-rnKlt4x4KgfDdqmRiaEBMA1awAdhfR5wx4VWdij4oIUK34Lyxj8cqWMbWvso_nPzrWOggyy0m7s8NtVpu1JdaBfePouiA4eQ=s1360-w1360-h1020-rw",
+        "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npnzqq-dL3zUeckLHIVheN4xWFyvGAgqTTr-vAwEJqki1je8DkpN6jlWbU-O7aCw551vGLHStxjFzU4LOUvuEmZ1QO9dBDCj_CplqxEyP5_uEmbNxyAE34sUQZK2vD54f1UD5ELrQ=s1360-w1360-h1020-rw",
+        "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrplT8uFiTYl_Iiqc2iRD1bZ5VCx25KYN20-plA1bkfJ_Q5jTmooOghyU9YqK5-U9mx_cQskF-rtGsT6q8rGePl7ofX4TA9P6ge9bVDNEiKHWpoU6r8XYRDQE3CeiF3B2nWww1fNA=s1360-w1360-h1020-rw",
+        "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqK2o8ZQNplwwSczk6oVAHTZTz5H0E8vfcRtAdx7HwZq8FtMTag9bbbhGhtkqR6a9rNVDpfQ3IRoGDUuVcW98fJbNQgZ_wtngiv9cJRy2KJqg-WjiopiKqYbwX6Qd-6YWiUs0Vh=s1360-w1360-h1020-rw",
+        "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqV5R5GQdNd4UnERvv8ZR2H-Jf_y8N-BAUZXxO1y1uVLpoRkWSYv3EyNdHjHJFQsz_PfqEkEBHxtdIcQxNLdTG9Anqls4EWudaK59iXOG9MlCEt-2duoLxmZjIN3R0Kjan_LWU87Tsza-I=s1360-w1360-h1020-rw",
+      ]
+    } else if (isHotelNandini) {
+      return [
+        decorationData.image,
+        pic3Nandini,
+        pic4Nandini,
+        pic5Nandini,
+        pic6Nandini,
+        pic7Nandini,
+        pic8Nandini,
+        pic9Nandini,
+        pic10Nandini,
+        pic11Nandini,
+        pic12Nandini,
+        pic13Nandini,
+        pic14Nandini,
+        pic15Nandini,
+        pic17Nandini,
+        pic18Nandini,
+        pic19Nandini,
+        pic20Nandini,
+        pic21Nandini,
+        pic22Nandini,
+        pic23Nandini,
+        pic24Nandini,
+        pic25Nandini,
+        pic26Nandini,
+        pic27Nandini,
+        pic28Nandini,
+        pic29Nandini,
+        pic30Nandini,
+        pic31Nandini,
+        pic32Nandini,
+        pic33Nandini,
+        pic34Nandini,
+        pic35Nandini,
+        pic36Nandini,
+      ]
+    } else if (isKsba) {
+      return [
+        decorationData.image,
+        pic1Ksba,
+        pic2Ksba,
+        pic3Ksba,
+        pic4Ksba,
+        pic5Ksba,
+        pic6Ksba,
+        pic7Ksba,
+        pic8Ksba,
+        pic9Ksba,
+        pic10Ksba,
+        pic11Ksba,
+        pic12Ksba,
+        pic13Ksba,
+        pic14Ksba,
+        pic15Ksba,
+        pic16Ksba,
+        pic18Ksba,
+        pic19Ksba,
+        pic20Ksba,
+        pic21Ksba,
+        pic22Ksba,
+        pic23Ksba,
+        pic24Ksba,
+        pic25Ksba,
+        pic26Ksba,
+        pic27Ksba,
+        pic28Ksba,
+        pic29Ksba,
+        pic30Ksba,
+        pic31Ksba,
+        pic32Ksba,
+        pic33Ksba,
+        pic34Ksba,
+        pic35Ksba,
+        pic36Ksba,
+      ]
+    } else {
+      return [decorationData.image]
+    }
+  }
+  
+  const galleryImages = getGalleryImages()
 
   const handleBackClick = () => {
     navigate(-1) // Go back to previous page
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="bg-gray-50">
       {/* Header Section */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -97,8 +254,8 @@ const DecorDetails = () => {
               </div>
             </div>
 
-            {/* Carousel Section - Only show for Honganasu Party Hall */}
-            {isHonganasuHall && (
+            {/* Carousel Section - Show for venues with multiple images */}
+            {(isHonganasuHall || isHotelNandini || isKsba) && (
               <div className="bg-white rounded-2xl shadow-lg p-6">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Gallery</h3>
                 <div className="flex gap-3 overflow-x-auto pb-2">
@@ -160,8 +317,8 @@ const DecorDetails = () => {
                 <p className="text-sm text-gray-500">Full range: {decorationData.priceRange}</p>
               </div>
 
-              {/* Product Details - Only show for Honganasu Party Hall */}
-              {isHonganasuHall ? (
+              {/* Product Details - Show for venues with detailed information */}
+              {(isHonganasuHall || isHotelNandini || isKsba) ? (
                 <div className="mb-4">
                   <h4 className="font-semibold text-gray-800 mb-2">Key Features:</h4>
                   <ul className="space-y-1">
@@ -244,7 +401,7 @@ const DecorDetails = () => {
                   className="w-full py-3 px-4 rounded-lg font-semibold text-white transition-all duration-300 shadow-lg hover:shadow-xl"
                   style={{ background: 'linear-gradient(90deg, #2b6777, #52ab98)' }}
                 >
-                  {isHonganasuHall ? 'Book This Decoration' : 'Contact for Details'}
+                  {(isHonganasuHall || isHotelNandini || isKsba) ? 'Book This Decoration' : 'Contact for Details'}
                 </button>
                 <button
                   onClick={() => navigate('/contact')}

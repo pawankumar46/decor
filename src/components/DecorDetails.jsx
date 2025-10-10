@@ -86,8 +86,8 @@ const DecorDetails = () => {
     id: 1,
     title: "Honganasu Party Hall",
     description: "Versatile hall with themed décor and vibrant celebrations.",
-    image: "https://drive.google.com/file/d/1yVftxloXQe5tYJYM4eMBR8r1I8PKZc_W/view?usp=drive_link",
-    tags: ["Engagement", "Seemantha", "Birthday"],
+    image: "https://lh3.googleusercontent.com/p/AF1QipNPSEc88Vo3g9leSKB_5Mg6YtimueCQcftnriih=s1360-w1360-h1020-rw",
+    tags: ["Engagement", "Baby Shower","Half Saree", "Birthday", "Anniversary"],
     rating: 4.9,
     colors: ["Gold", "Red", "Cream"],
     priceStart: "₹3,500",
@@ -365,35 +365,6 @@ const DecorDetails = () => {
                 </div>
               </div>
 
-              {/* Color Tags */}
-              <div className="mb-4">
-                <h4 className="text-sm font-medium text-gray-700 mb-2">Color Palette:</h4>
-                <div className="flex flex-wrap gap-2">
-                  {decorationData.colors.map((color, index) => (
-                    <span
-                      key={index}
-                      className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                        color === 'Gold' ? 'bg-yellow-100 text-yellow-800' :
-                        color === 'Red' ? 'bg-red-100 text-red-800' :
-                        color === 'Cream' ? 'bg-gray-100 text-gray-800' :
-                        color === 'White' ? 'bg-white border border-gray-300 text-gray-800' :
-                        color === 'Pink' ? 'bg-pink-100 text-pink-800' :
-                        color === 'Green' ? 'bg-green-100 text-green-800' :
-                        color === 'Blue' ? 'bg-blue-100 text-blue-800' :
-                        color === 'Beige' ? 'bg-yellow-100 text-yellow-800' :
-                        color === 'Purple' ? 'bg-purple-100 text-purple-800' :
-                        color === 'Black' ? 'bg-gray-800 text-white' :
-                        color === 'Orange' ? 'bg-orange-100 text-orange-800' :
-                        color === 'Silver' ? 'bg-gray-100 text-gray-800' :
-                        'bg-gray-100 text-gray-800'
-                      }`}
-                    >
-                      {color}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
               {/* Action Buttons */}
               <div className="space-y-3">
                 <button
@@ -401,7 +372,7 @@ const DecorDetails = () => {
                   className="w-full py-3 px-4 rounded-lg font-semibold text-white transition-all duration-300 shadow-lg hover:shadow-xl"
                   style={{ background: 'linear-gradient(90deg, #2b6777, #52ab98)' }}
                 >
-                  {(isHonganasuHall || isHotelNandini || isKsba) ? 'Book This Decoration' : 'Contact for Details'}
+                  {(isHonganasuHall || isHotelNandini || isKsba) ? 'Book This Service' : 'Contact for Details'}
                 </button>
                 <button
                   onClick={() => navigate('/contact')}

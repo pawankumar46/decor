@@ -13,9 +13,8 @@ const ListOfItems = () => {
       title: "Honganasu Party Hall",
       description: "Versatile hall with themed décor and vibrant celebrations.",
       image: "https://lh3.googleusercontent.com/p/AF1QipNPSEc88Vo3g9leSKB_5Mg6YtimueCQcftnriih=s1360-w1360-h1020-rw",
-      tags: ["Engagement", "Seemantha", "Birthday"],
+      tags: ["Engagement", "Baby Shower", "Birthday"],
       rating: 4.9,
-      colors: ["Gold", "Red", "Cream"],
       priceStart: "₹3,500",
       priceRange: "₹3,500 - ₹10,000",
       gradient: "from-yellow-200 to-orange-300",
@@ -37,7 +36,6 @@ const ListOfItems = () => {
       image: "https://nandhini.com/wp-content/uploads/2022/10/nandhini-logo-removebg-preview-e1666141300990.png",
       tags: ["Restaurant", "Party", "Modern Style"],
       rating: 4.8,
-      colors: ["White", "Pink", "Green"],
       priceStart: "₹1000",
       priceRange: "₹1000 - ₹8,500",
       gradient: "from-pink-200 to-green-300",
@@ -52,7 +50,6 @@ const ListOfItems = () => {
       image: "https://www.myksba.com/img/carousel-1.jpg",
       tags: ["Wedding"],
       rating: 4.7,
-      colors: ["White", "Blue", "Beige"],
       priceStart: "₹1,200",
       priceRange: "₹1,200 - ₹2,000",
       gradient: "from-blue-200 to-cyan-300",
@@ -67,7 +64,6 @@ const ListOfItems = () => {
       image: "https://lh3.googleusercontent.com/p/AF1QipNJFro43Gl6XmD4hnZ3f01s6ApDaqNfQpsx5DOj=s1360-w1360-h1020-rw",
       tags: ["Popular", "Birthday"],
       rating: 4.6,
-      colors: ["Pink", "Gold", "Purple"],
       priceStart: "₹300",
       priceRange: "₹300 - ₹800",
       gradient: "from-pink-200 to-purple-300",
@@ -83,7 +79,6 @@ const ListOfItems = () => {
       image: "https://images.unsplash.com/photo-1637724562261-5777b67c59b2?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tags: ["Birthday"],
       rating: 4.5,
-      colors: ["Blue", "Red", "Yellow"],
       priceStart: "₹250",
       priceRange: "₹250 - ₹600",
       gradient: "from-blue-200 to-red-300",
@@ -99,7 +94,6 @@ const ListOfItems = () => {
       image: "https://images.unsplash.com/photo-1626149136691-78e3977b3d69?q=80&w=1150&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tags: ["Popular", "Birthday"],
       rating: 4.8,
-      colors: ["Black", "Gold", "White"],
       priceStart: "₹400",
       priceRange: "₹400 - ₹1,000",
       gradient: "from-gray-200 to-yellow-200",
@@ -116,7 +110,6 @@ const ListOfItems = () => {
       image: "https://plus.unsplash.com/premium_photo-1670333351949-47f735fa9ba4?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tags: ["Popular", "Anniversary"],
       rating: 4.9,
-      colors: ["Gold", "Orange", "White"],
       priceStart: "₹1,500",
       priceRange: "₹1,500 - ₹3,000",
       gradient: "from-yellow-200 to-orange-300",
@@ -132,7 +125,6 @@ const ListOfItems = () => {
       image: "https://i.pinimg.com/736x/c8/d6/6f/c8d66f7cef63a3fc5d1fa231d2979c7f.jpg",
       tags: ["Anniversary"],
       rating: 4.7,
-      colors: ["Silver", "Blue", "White"],
       priceStart: "₹800",
       priceRange: "₹800 - ₹1,800",
       gradient: "from-gray-200 to-blue-200",
@@ -414,7 +406,7 @@ const ListOfItems = () => {
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-800 mb-2">{decoration.title}</h3>
                   <p className="text-gray-600 text-sm mb-4">{decoration.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  {/* <div className="flex flex-wrap gap-2 mb-4">
                     {decoration.colors.map((color, index) => (
                       <span
                         key={index}
@@ -436,7 +428,7 @@ const ListOfItems = () => {
                         {color}
                       </span>
                     ))}
-                  </div>
+                  </div> */}
                   <div className="mb-4">
                     <p className="text-sm text-gray-500">Starting from</p>
                     <p className="text-2xl font-bold text-gray-800">{decoration.priceStart}</p>

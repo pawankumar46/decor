@@ -36,7 +36,10 @@ const EVENT_ORDER = [
   "Mane Devru Pooje",
   "Kashi Yatre",
   "Gowri Pooja",
+  "Muhurtam (Jeerige Bella)",
   "Sapthapadi",
+  "Sathyanarayana Pooja",
+  "Return gifts",
 ];
 
 const ListOfItems = () => {

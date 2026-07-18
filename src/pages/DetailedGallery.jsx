@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getGalleryImages } from '../utils/galleryImages';
+import { getGalleryImages, getGalleryFolders, formatFolderName } from '../utils/galleryImages';
 
 // Maps a route `eventType` to its asset folder + display copy.
 // To add a new event: drop a folder in src/assets (or src/Images) and add an
@@ -53,12 +53,32 @@ const eventPhotos = Object.fromEntries(
   Object.entries(eventConfig).map(([key, config]) => [key, buildEvent(config)])
 );
 
+// Resolves a route slug to a gallery. Known slugs use their configured copy;
+// any other slug is treated as a raw asset folder name so newly-added folders
+// work automatically. Falls back to a friendly empty gallery.
+const resolveEvent = (eventType) => {
+  if (eventType && eventPhotos[eventType]) return eventPhotos[eventType];
+
+  const folderMatch = getGalleryFolders().find(
+    (folder) => folder.toLowerCase() === (eventType || '').toLowerCase()
+  );
+  if (folderMatch) {
+    return buildEvent({
+      folder: folderMatch,
+      title: `${formatFolderName(folderMatch)} Decorations`,
+      description: `Our ${formatFolderName(folderMatch)} decoration setups`,
+    });
+  }
+
+  return eventPhotos['gruhapravesha'] || { title: '', description: '', photos: [] };
+};
+
 const DetailedGallery = () => {
   const { eventType } = useParams();
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const currentEvent = eventPhotos[eventType] || eventPhotos['gruhapravesha'];
+  const currentEvent = resolveEvent(eventType);
   const photos = currentEvent.photos;
 
   // Reset the active image whenever the event changes.

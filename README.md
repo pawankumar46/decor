@@ -89,7 +89,10 @@ const photos = getGalleryImages('Birthday'); // ordered array of image URLs
 const cover  = getCoverImage('Birthday');    // first image in the folder
 ```
 
-3. To expose a new folder as a gallery route, add an entry to `eventConfig` in `DetailedGallery.jsx` mapping an `eventType` slug to the folder name and display copy. Missing/empty folders render a friendly empty state instead of crashing.
+3. **New folders appear automatically.** Any folder under `src/assets/` that isn't already a hand-crafted card (see `HANDLED_FOLDERS` in `ListOfItems.jsx`) gets its own card in the home page "Browse by Event Type" grid — using the folder's first image as the cover, a title derived from the folder name, and the image count. Clicking it opens `/gallery/<FolderName>` and showcases every picture in that folder.
+4. For a hand-styled category card (custom emoji/copy) instead of the auto-generated one, add an entry to `eventConfig` in `DetailedGallery.jsx` and a matching card in `ListOfItems.jsx`, then add the folder to `HANDLED_FOLDERS`. Missing/empty folders render a friendly empty state instead of crashing.
+
+> Folder-name → title examples: `HouseWarming → "House Warming"`, `baby_shower → "Baby Shower"`.
 
 ## Styling & Design System
 
@@ -102,6 +105,11 @@ const cover  = getCoverImage('Birthday');    // first image in the folder
 No environment variables are required to run the app locally. The contact form currently logs submissions to the console and shows a confirmation alert (no backend integration yet).
 
 ## Changelog
+
+### 2026-07-18 (auto cards)
+- **Added** automatic event cards: any new folder dropped into `src/assets` now renders its own card in the home "Browse by Event Type" grid (cover image, formatted title, image count) and opens a gallery of that folder's photos on click.
+- **Added** `getGalleryFolders()` and `formatFolderName()` helpers to `galleryImages.js`.
+- **Updated** `DetailedGallery.jsx` to resolve any folder name as a gallery route (`/gallery/<FolderName>`), not just the pre-configured event slugs.
 
 ### 2026-07-18 (later)
 - **Added** `src/utils/galleryImages.js` — automatically imports every image from asset sub-folders using `import.meta.glob`, naturally ordered by picture number.

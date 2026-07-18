@@ -1,6 +1,27 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, X, SlidersHorizontal, PackageOpen } from "lucide-react";
+import {
+  getGalleryFolders,
+  getCoverImage,
+  getGalleryImages,
+  formatFolderName,
+} from "../utils/galleryImages";
+
+// Folders already represented above by a hand-crafted card, or used elsewhere
+// as venue galleries (not event categories). Any other folder added under
+// src/assets automatically gets its own card below.
+const HANDLED_FOLDERS = new Set([
+  "HouseWarming",
+  "Wedding",
+  "Birthday",
+  "Sangeet",
+  "NamingCeremony",
+  "Engagement",
+  "BabyShower",
+  "Nandini",
+  "Ksba",
+]);
 
 const ListOfItems = () => {
   // State for search functionality
@@ -165,6 +186,12 @@ const ListOfItems = () => {
     setSearchTerm("");
     setSelectedStyle("All Styles");
   };
+
+  // Any newly-added asset folder that isn't already a hand-crafted card.
+  const extraEventFolders = useMemo(
+    () => getGalleryFolders().filter((folder) => !HANDLED_FOLDERS.has(folder)),
+    []
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -354,7 +381,43 @@ const ListOfItems = () => {
                 </div>
               </div>
             </div></a>
-            
+
+            {/* Auto-generated cards for any new folder added under src/assets */}
+            {extraEventFolders.map((folder) => {
+              const count = getGalleryImages(folder).length;
+              const cover = getCoverImage(folder);
+              return (
+                <a key={folder} href={`/gallery/${folder}`} rel="noopener noreferrer">
+                  <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(135deg, #c8d8e4, #f2f2f2)' }}></div>
+                    <div className="relative">
+                      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl shadow-lg transition-transform duration-300 group-hover:scale-110" style={{ background: 'linear-gradient(135deg, #2b6777, #52ab98)' }}>
+                        {cover ? (
+                          <img
+                            src={cover}
+                            alt={formatFolderName(folder)}
+                            loading="lazy"
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-3xl text-white">🎉</span>
+                        )}
+                      </div>
+                      <h3 className="mb-2 text-xl font-bold transition-colors duration-300" style={{ color: '#2b6777' }}>
+                        {formatFolderName(folder)}
+                      </h3>
+                      <p className="text-base font-medium" style={{ color: '#2b6777' }}>
+                        {count} {count === 1 ? 'design' : 'designs'}
+                      </p>
+                      <div className="mt-4 h-2 w-full rounded-full" style={{ backgroundColor: '#c8d8e4' }}>
+                        <div className="h-2 rounded-full" style={{ background: 'linear-gradient(90deg, #2b6777, #52ab98)', width: `${Math.min(100, count * 10)}%` }}></div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+
           </div>
         </div>
       </div>

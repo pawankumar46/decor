@@ -47,3 +47,16 @@ export const getGalleryImages = (folder) => galleryImages[folder] ?? [];
 
 // Convenience helper for the first image in a folder (e.g. a cover thumbnail).
 export const getCoverImage = (folder) => getGalleryImages(folder)[0];
+
+// Alphabetical list of every discovered folder name.
+export const getGalleryFolders = () => Object.keys(galleryImages).sort();
+
+// Turns a folder name into a readable title:
+//   "HouseWarming" -> "House Warming", "baby_shower" -> "Baby Shower"
+export const formatFolderName = (folder) =>
+  folder
+    .replace(/([a-z\d])([A-Z])/g, '$1 $2')
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\b\w/g, (char) => char.toUpperCase());

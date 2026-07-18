@@ -1,12 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import picHw from '../Images/HouseWarming/pic2.jpeg'
-import picBw from "../assets/BabyShower/pic1.jpeg"
-import picBirth from '../assets/Birthday/pic1.jpeg'
-import picName from '../assets/NamingCeremony/pic1.jpeg'
-import picSan  from '../assets/Sangeet/pic1.jpeg'
-import picWed from '../assets/Wedding/pic1.jpeg'
-import picEng from '../assets/Engagement/pic1.jpeg'
+import { getCoverImage } from '../utils/galleryImages';
 
 const Gallery = () => {
   const navigate = useNavigate();
@@ -18,7 +12,7 @@ const Gallery = () => {
       title: "Gruhapravesha Ceremony", 
       description: "Sacred decorations for house warming ceremony with traditional elements.",
       eventType: "gruhapravesha",
-      image: picHw
+      image: getCoverImage('HouseWarming')
     },
     { 
       id: 2, 
@@ -26,7 +20,7 @@ const Gallery = () => {
       description: "A joyful burst of colorful flowers, crafted to spread smiles and celebrate special days.",
       eventType: "birthday",
       imageCount: 3,
-      image: picBirth
+      image: getCoverImage('Birthday')
     },
     { 
       id: 3, 
@@ -34,7 +28,7 @@ const Gallery = () => {
       description: "Gentle white lilies and fresh greenery, representing purity and blessings for the newborn.",
       eventType: "cradle",
       imageCount: 2,
-      image: picName
+      image: getCoverImage('NamingCeremony')
     },
     { 
       id: 4, 
@@ -42,7 +36,7 @@ const Gallery = () => {
       description: "Traditional red roses and festive blooms to honor motherhood and auspicious beginnings.",
       eventType: "seemantham",
       imageCount: 3,
-      image: picBw
+      image: getCoverImage('BabyShower')
     },
     { 
       id: 5, 
@@ -50,7 +44,7 @@ const Gallery = () => {
       description: "Romantic tulips and daffodils, setting the stage for love and togetherness.",
       eventType: "engagement",
       imageCount: 4,
-      image: picEng
+      image: getCoverImage('Engagement')
     },
     { 
       id: 6, 
@@ -58,7 +52,7 @@ const Gallery = () => {
       description: "Vibrant marigolds and festive accents.",
       eventType: "sangeet",
       imageCount: 3,
-      image: picSan
+      image: getCoverImage('Sangeet')
     },
     { 
       id: 7, 
@@ -66,7 +60,7 @@ const Gallery = () => {
       description: "Grand floral arches with roses and orchids, creating an unforgettable wedding ambience.",
       eventType: "wedding",
       imageCount: 5,
-      image: picWed
+      image: getCoverImage('Wedding')
     },
     
   ];
@@ -92,8 +86,17 @@ const Gallery = () => {
           {galleryItems.map((item) => (
             <div 
               key={item.id} 
+              role="button"
+              tabIndex={0}
               onClick={() => handleGalleryItemClick(item.eventType)}
-              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105 group"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleGalleryItemClick(item.eventType);
+                }
+              }}
+              aria-label={`View ${item.title} gallery`}
+              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105 group focus:outline-none focus:ring-2 focus:ring-[#52ab98]/50"
             >
               <div className="relative h-64 bg-gradient-to-br from-pink-200 to-purple-200 flex items-center justify-center overflow-hidden">
                 {item.image ? (
@@ -121,7 +124,7 @@ const Gallery = () => {
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 transition-colors duration-300 group-hover:text-[#2b6777]">
                   {item.title}
                 </h3>
                 <p className="text-gray-600 mb-4">
@@ -129,7 +132,7 @@ const Gallery = () => {
                 </p>
                 <div className="flex items-center justify-between">
                  
-                  <div className="flex items-center text-blue-600 text-sm font-medium group-hover:text-blue-700">
+                  <div className="flex items-center text-sm font-medium text-[#2b6777] group-hover:text-[#52ab98]">
                     View Gallery
                     <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

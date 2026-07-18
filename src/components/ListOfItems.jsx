@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Search, X, SlidersHorizontal, PackageOpen } from "lucide-react";
 
 const ListOfItems = () => {
   // State for search functionality
@@ -135,24 +136,29 @@ const ListOfItems = () => {
     }
   ];
 
-  // Filter decorations based on search term and selected style
-  const filteredDecorations = decorations.filter(decoration => {
-    const matchesSearch = decoration.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      decoration.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      decoration.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      decoration.colors.some(color => color.toLowerCase().includes(searchTerm.toLowerCase()));
+  // Build the list of available styles from the decoration tags
+  const styleOptions = useMemo(() => {
+    const tags = new Set();
+    decorations.forEach((decoration) => decoration.tags.forEach((tag) => tags.add(tag)));
+    return ["All Styles", ...Array.from(tags).sort()];
+  }, [decorations]);
 
-    const matchesStyle = selectedStyle === "All Styles" ||
-      decoration.tags.includes(selectedStyle) ||
-      (selectedStyle === "Modern" && decoration.tags.includes("Modern Style")) ||
-      (selectedStyle === "Traditional" && decoration.tags.includes("Wedding")) ||
-      (selectedStyle === "Vintage" && decoration.tags.includes("Anniversary")) ||
-      (selectedStyle === "Minimalist" && decoration.tags.includes("Modern Style")) ||
-      (selectedStyle === "Bohemian" && decoration.tags.includes("Birthday")) ||
-      (selectedStyle === "Rustic" && decoration.tags.includes("Wedding"));
+  // Filter decorations based on search term and selected style
+  const query = searchTerm.trim().toLowerCase();
+  const filteredDecorations = decorations.filter((decoration) => {
+    const matchesSearch =
+      query === "" ||
+      decoration.title.toLowerCase().includes(query) ||
+      decoration.description.toLowerCase().includes(query) ||
+      decoration.tags.some((tag) => tag.toLowerCase().includes(query));
+
+    const matchesStyle =
+      selectedStyle === "All Styles" || decoration.tags.includes(selectedStyle);
 
     return matchesSearch && matchesStyle;
   });
+
+  const hasActiveFilters = query !== "" || selectedStyle !== "All Styles";
 
   // Clear filters function
   const clearFilters = () => {
@@ -359,15 +365,96 @@ const ListOfItems = () => {
       {/* Decoration Showcase Section */}
       <div className="bg-white py-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
               Decoration Showcase
             </h2>
-            <p className="text-xl mb-6" style={{ color: '#2b6777' }}>
-              {filteredDecorations.length} designs found
+            <p className="text-lg text-gray-600">
+              Search and filter our venues and decoration setups.
             </p>
           </div>
 
+          {/* Search & Filter Toolbar */}
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="relative w-full sm:max-w-md">
+              <Search
+                className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+                aria-hidden="true"
+              />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search venues, events or styles..."
+                aria-label="Search decorations"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-10 text-gray-800 placeholder-gray-400 transition-colors duration-200 focus:border-[#52ab98] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#52ab98]/40"
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm("")}
+                  aria-label="Clear search"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#52ab98]/40"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center gap-3">
+              <label htmlFor="style-filter" className="sr-only">
+                Filter by style
+              </label>
+              <div className="relative">
+                <SlidersHorizontal
+                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+                  aria-hidden="true"
+                />
+                <select
+                  id="style-filter"
+                  value={selectedStyle}
+                  onChange={(e) => setSelectedStyle(e.target.value)}
+                  className="appearance-none rounded-xl border border-gray-200 bg-gray-50 py-3 pl-9 pr-8 text-gray-800 transition-colors duration-200 focus:border-[#52ab98] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#52ab98]/40"
+                >
+                  {styleOptions.map((style) => (
+                    <option key={style} value={style}>
+                      {style}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {hasActiveFilters && (
+                <button
+                  onClick={clearFilters}
+                  className="rounded-xl border border-gray-200 px-4 py-3 text-sm font-medium text-gray-600 transition-colors duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#52ab98]/40"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+          </div>
+
+          <p className="mb-6 text-sm font-medium" style={{ color: '#2b6777' }}>
+            {filteredDecorations.length} {filteredDecorations.length === 1 ? 'design' : 'designs'} found
+          </p>
+
+          {filteredDecorations.length === 0 ? (
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-16 text-center">
+              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
+                <PackageOpen className="h-8 w-8 text-gray-400" aria-hidden="true" />
+              </div>
+              <h3 className="mb-1 text-lg font-semibold text-gray-800">No decorations found</h3>
+              <p className="mb-6 max-w-sm text-sm text-gray-500">
+                We couldn't find anything matching your search. Try a different keyword or clear your filters.
+              </p>
+              <button
+                onClick={clearFilters}
+                className="rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#52ab98]/50"
+                style={{ background: 'linear-gradient(90deg, #2b6777, #52ab98)' }}
+              >
+                Clear filters
+              </button>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredDecorations.map((decoration) => (
               <div key={decoration.id} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
@@ -437,7 +524,7 @@ const ListOfItems = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={()=> navigate('/decordetails', { state: { decoration: decoration } })}
-                      className="flex-1 text-white py-0.5 px-2 rounded-md transition-all duration-300 text-xs"
+                      className="flex-1 rounded-lg py-2.5 px-4 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#52ab98]/50"
                       style={{ background: 'linear-gradient(90deg, #2b6777, #52ab98)' }}
                     >
                       View Details →
@@ -448,6 +535,7 @@ const ListOfItems = () => {
               </div>
             ))}
           </div>
+          )}
         </div>
       </div>
 

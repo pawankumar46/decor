@@ -94,6 +94,8 @@ const cover  = getCoverImage('Birthday');    // first image in the folder
 
 > Folder-name → title examples: `HouseWarming → "House Warming"`, `baby_shower → "Baby Shower"`.
 
+**Card order:** auto-generated cards follow the ceremony sequence defined in `EVENT_ORDER` in `ListOfItems.jsx` (e.g. *Welcoming Bride and Groom → Lagna Patrike → … → Sapthapadi*). Folders not listed there are appended alphabetically. Add a new folder name to `EVENT_ORDER` to position its card in the flow.
+
 ## Styling & Design System
 
 - Global styles and custom `fade-in` / `slide-up` animations live in `src/index.css`.
@@ -105,6 +107,9 @@ const cover  = getCoverImage('Birthday');    // first image in the folder
 No environment variables are required to run the app locally. The contact form currently logs submissions to the console and shows a confirmation alert (no backend integration yet).
 
 ## Changelog
+
+### 2026-07-18 (ceremony order)
+- **Added** `EVENT_ORDER` in `ListOfItems.jsx` so auto-generated cards for the new wedding-ritual folders appear in the proper ceremony sequence (starting with *Welcoming Bride and Groom*), instead of alphabetically. Folder names with spaces (e.g. `Devara Samaradhane`) and mixed image types (`png`, `jpg`, `JPG`, `jpeg`, `webp`) are supported.
 
 ### 2026-07-18 (auto cards)
 - **Added** automatic event cards: any new folder dropped into `src/assets` now renders its own card in the home "Browse by Event Type" grid (cover image, formatted title, image count) and opens a gallery of that folder's photos on click.

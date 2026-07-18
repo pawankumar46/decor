@@ -23,6 +23,22 @@ const HANDLED_FOLDERS = new Set([
   "Ksba",
 ]);
 
+// Proper ceremony sequence for the auto-generated cards (welcoming first, then
+// following the traditional flow). Folders not listed here are appended after,
+// in alphabetical order. Names must match the folder names under src/assets.
+const EVENT_ORDER = [
+  "Welcoming Bride and Groom",
+  "Lagna Patrike",
+  "Kobbari Mithai or Sweets",
+  "Devara Samaradhane",
+  "Chapara",
+  "Hoovilya",
+  "Mane Devru Pooje",
+  "Kashi Yatre",
+  "Gowri Pooja",
+  "Sapthapadi",
+];
+
 const ListOfItems = () => {
   // State for search functionality
   const [searchTerm, setSearchTerm] = useState("");
@@ -187,11 +203,17 @@ const ListOfItems = () => {
     setSelectedStyle("All Styles");
   };
 
-  // Any newly-added asset folder that isn't already a hand-crafted card.
-  const extraEventFolders = useMemo(
-    () => getGalleryFolders().filter((folder) => !HANDLED_FOLDERS.has(folder)),
-    []
-  );
+  // Any newly-added asset folder that isn't already a hand-crafted card,
+  // ordered by the ceremony sequence (unknown folders sorted alphabetically last).
+  const extraEventFolders = useMemo(() => {
+    const orderOf = (folder) => {
+      const index = EVENT_ORDER.indexOf(folder);
+      return index === -1 ? EVENT_ORDER.length : index;
+    };
+    return getGalleryFolders()
+      .filter((folder) => !HANDLED_FOLDERS.has(folder))
+      .sort((a, b) => orderOf(a) - orderOf(b) || a.localeCompare(b));
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">

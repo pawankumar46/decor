@@ -1,108 +1,118 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import React, { useState, useEffect } from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+
+const links = [
+  { to: '/', label: 'Home' },
+  { to: '/gallery', label: 'Gallery' },
+  { to: '/contact', label: 'Contact' },
+];
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const linkClasses = ({ isActive }) =>
-    `relative px-3 py-2 text-sm sm:text-base lg:text-lg font-medium transition-all duration-300 
-    ${isActive ? "font-semibold" : "text-gray-700"}
-    after:content-[''] after:block after:w-0 after:h-[2px] 
-    after:transition-all after:duration-300 hover:after:w-full`;
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-  const mobileLinkClasses = ({ isActive }) =>
-    `block px-4 py-3 text-base font-medium transition-all duration-300 rounded-lg mx-2
-    ${isActive ? "font-semibold bg-gray-50" : "text-gray-700 hover:bg-gray-50"}`;
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  const linkClass = ({ isActive }) =>
+    `relative text-sm font-medium tracking-wide transition-colors duration-200 ${
+      isActive ? 'text-[var(--ink)]' : 'text-[var(--muted)] hover:text-[var(--ink)]'
+    } after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-[var(--sage)] after:transition-all after:duration-300 ${
+      isActive ? 'after:w-full' : 'after:w-0 hover:after:w-full'
+    }`;
 
   return (
-    <nav className="bg-white shadow-lg border-b border-gray-200 font-sans sticky top-0 z-50" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)' }}>
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-        <div className="flex justify-between items-center h-14 sm:h-16">
-          {/* Left side - Logo / Brand */}
-          <div className="flex items-center flex-shrink-0">
-            <NavLink
-              to="/"
-              className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold italic hover:scale-105 transform transition duration-300 truncate"
-              style={{ color: '#2b6777' }}
-            >
-              <span className="hidden sm:inline">🌸 Sri Venkateshwara Florist</span>
-              <span className="sm:hidden">🌸 SVF</span>
-            </NavLink>
-          </div>
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'border-b border-[var(--ink)]/8 bg-[var(--paper)]/90 shadow-sm backdrop-blur-xl'
+          : 'bg-transparent'
+      }`}
+    >
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-[4.5rem] sm:px-6 lg:px-8">
+        <Link to="/" className="group flex min-w-0 flex-col">
+          <span className="font-display text-xl font-semibold text-[var(--ink)] transition-colors group-hover:text-[var(--sage)] sm:text-2xl">
+            Sri Venkateshwara
+          </span>
+          <span className="hidden text-[0.65rem] font-medium uppercase tracking-[0.28em] text-[var(--champagne)] sm:block">
+            Florist
+          </span>
+        </Link>
 
-          {/* Desktop Links */}
-          <div className="hidden lg:flex space-x-6 xl:space-x-8">
-            <NavLink to="/" className={linkClasses} style={{ color: '#2b6777' }}>
-              Home
+        <div className="hidden items-center gap-8 md:flex">
+          {links.map((link) => (
+            <NavLink key={link.to} to={link.to} end={link.to === '/'} className={linkClass}>
+              {link.label}
             </NavLink>
-            <NavLink to="/contact" className={linkClasses} style={{ color: '#2b6777' }}>
-              Contact Us
-            </NavLink>
-            <NavLink to="/gallery" className={linkClasses} style={{ color: '#2b6777' }}>
-              Gallery
-            </NavLink>
-          </div>
-
-          {/* Tablet Links */}
-          <div className="hidden md:flex lg:hidden space-x-4">
-            <NavLink to="/" className={linkClasses} style={{ color: '#2b6777' }}>
-              Home
-            </NavLink>
-            <NavLink to="/contact" className={linkClasses} style={{ color: '#2b6777' }}>
-              Contact
-            </NavLink>
-            <NavLink to="/gallery" className={linkClasses} style={{ color: '#2b6777' }}>
-              Gallery
-            </NavLink>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="focus:outline-none p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-              style={{ color: '#2b6777' }}
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          ))}
+          <Link to="/contact" className="btn-primary !px-5 !py-2.5 text-xs">
+            Book consultation
+          </Link>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-white shadow-lg border-t border-gray-200 animate-in slide-in-from-top-2 duration-200">
-          <div className="px-3 pt-2 pb-4 space-y-1">
-            <NavLink 
-              to="/" 
-              className={mobileLinkClasses} 
-              onClick={() => setIsOpen(false)} 
-              style={{ color: '#2b6777' }}
-            >
-              Home
-            </NavLink>
-            <NavLink 
-              to="/contact" 
-              className={mobileLinkClasses} 
-              onClick={() => setIsOpen(false)} 
-              style={{ color: '#2b6777' }}
-            >
-              Contact Us
-            </NavLink>
-            <NavLink 
-              to="/gallery" 
-              className={mobileLinkClasses} 
-              onClick={() => setIsOpen(false)} 
-              style={{ color: '#2b6777' }}
-            >
-              Gallery
-            </NavLink>
-          </div>
-        </div>
-      )}
-    </nav>
+        <button
+          type="button"
+          onClick={() => setIsOpen((v) => !v)}
+          className="rounded-full p-2 text-[var(--ink)] transition-colors hover:bg-[var(--mist)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sage)] md:hidden"
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isOpen}
+        >
+          {isOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </nav>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="overflow-hidden border-t border-[var(--ink)]/8 bg-[var(--paper)] md:hidden"
+          >
+            <div className="flex flex-col gap-1 px-4 py-4">
+              {links.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  end={link.to === '/'}
+                  onClick={() => setIsOpen(false)}
+                  className={({ isActive }) =>
+                    `rounded-xl px-4 py-3 text-base font-medium transition-colors ${
+                      isActive
+                        ? 'bg-[var(--mist)] text-[var(--ink)]'
+                        : 'text-[var(--muted)] hover:bg-[var(--mist)] hover:text-[var(--ink)]'
+                    }`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+              <Link
+                to="/contact"
+                onClick={() => setIsOpen(false)}
+                className="btn-primary mt-2 w-full"
+              >
+                Book consultation
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 };
 

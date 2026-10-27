@@ -2,7 +2,7 @@
 
 A responsive React + Vite web app for a florist and event‑decoration business. It showcases venues and decoration setups, lets visitors browse curated galleries by event type, and provides a contact form for enquiries.
 
-The UI is built with Tailwind CSS v4 and follows a consistent teal design system (`#2b6777` / `#52ab98` / `#c8d8e4`).
+The UI is an editorial, award-inspired redesign: deep ink teal + sage + champagne accents, **Cormorant Garamond** display type, **Manrope** UI type, Framer Motion page/scroll reveals, and a lazy-loaded **Three.js** petal field on the home hero.
 
 ## Features
 
@@ -15,13 +15,16 @@ The UI is built with Tailwind CSS v4 and follows a consistent teal design system
 - **Detailed gallery** (`/gallery/:eventType`) — Auto‑advancing carousel with prev/next controls, image counter, and a thumbnail strip.
 - **Contact** (`/contact`) — Contact form plus business information and hours.
 - **Responsive navigation** with desktop, tablet, and mobile menus.
-- **Accessibility & motion** — Focus rings, aria labels/pressed states, lazy‑loaded images, and `prefers-reduced-motion` support.
+- **Accessibility & motion** — Focus rings, aria labels/pressed states, lazy‑loaded images, Framer Motion reveals, and `prefers-reduced-motion` support (Three.js hero pauses when reduced motion is preferred).
+- **Contact form UX** — Inline validation, loading/disabled submit, and success state (no raw alerts).
 
 ## Tech Stack
 
 - **React 19** with **React Router 7**
 - **Vite 7** (dev server + build)
 - **Tailwind CSS 4** via `@tailwindcss/vite`
+- **Framer Motion** — page transitions and scroll reveals
+- **Three.js** — hero petal / pollen field (`PetalField.jsx`, code-split)
 - **lucide-react** for icons
 
 ## Getting Started
@@ -43,10 +46,12 @@ decor/
 │   ├── assets/            # Event photos (Birthday, Wedding, Engagement, etc.)
 │   ├── Images/            # HouseWarming photos
 │   ├── components/
-│   │   ├── NavBar.jsx     # Responsive top navigation
+│   │   ├── NavBar.jsx     # Sticky glass nav + mobile drawer
 │   │   ├── Footer.jsx     # Site footer with contact info
-│   │   ├── ListOfItems.jsx# Home / decoration showcase with search & filters
-│   │   └── DecorDetails.jsx# Single decoration detail + image gallery
+│   │   ├── ListOfItems.jsx# Home hero, ceremony grid, showcase
+│   │   ├── DecorDetails.jsx# Single decoration detail + image gallery
+│   │   ├── PetalField.jsx # Three.js hero particle field
+│   │   └── Reveal.jsx     # Scroll-in motion wrapper
 │   ├── pages/
 │   │   ├── Home.jsx       # Simple welcome page
 │   │   ├── Contact.jsx    # Contact form + business details
@@ -98,15 +103,26 @@ const cover  = getCoverImage('Birthday');    // first image in the folder
 
 ## Styling & Design System
 
-- Global styles and custom `fade-in` / `slide-up` animations live in `src/index.css`.
-- Primary palette: `#2b6777` (primary), `#52ab98` (accent), `#c8d8e4` (light).
-- Focus states use a teal ring (`focus:ring-[#52ab98]/50`) for consistency and accessibility.
+- Tokens and utilities live in `src/index.css` (`--ink`, `--sage`, `--mist`, `--champagne`, `--paper`).
+- Typography: Cormorant Garamond (display) + Manrope (body), loaded from Google Fonts in `index.html`.
+- Shared buttons: `.btn-primary`, `.btn-primary-light`, `.btn-ghost`, `.input-field`.
+- Motion respects `prefers-reduced-motion`.
 
 ## Configuration
 
 No environment variables are required to run the app locally. The contact form currently logs submissions to the console and shows a confirmation alert (no backend integration yet).
 
 ## Changelog
+
+### 2026-10-27 (UI polish)
+- Fixed search and style-filter icon overlapping text (input padding).
+- Removed "Ceremony step" label on auto-generated event cards; they now show the design count instead.
+
+### 2026-10-27 (UI redesign)
+- Full visual redesign inspired by editorial / award-winning portfolio sites: brand-first hero, image ceremony cards, refined contact & gallery pages.
+- Added **Framer Motion** (route transitions, scroll reveals) and **Three.js** petal field on the home hero (lazy-loaded).
+- New design tokens, display typography, glass sticky nav, and improved contact form states (validation + success).
+- Functionality unchanged: routes, search/filter, auto-folder cards, galleries, and booking CTAs.
 
 ### 2026-07-18 (ceremony order)
 - **Added** `EVENT_ORDER` in `ListOfItems.jsx` so auto-generated cards for the new wedding-ritual folders appear in the proper ceremony sequence (starting with *Welcoming Bride and Groom*), instead of alphabetically. Folder names with spaces (e.g. `Devara Samaradhane`) and mixed image types (`png`, `jpg`, `JPG`, `jpeg`, `webp`) are supported.

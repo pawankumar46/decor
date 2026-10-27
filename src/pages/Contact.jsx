@@ -1,205 +1,263 @@
 import React, { useState } from 'react';
+import { MapPin, Phone, Mail, Clock, CheckCircle2 } from 'lucide-react';
+import Reveal from '../components/Reveal';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    message: ''
+    message: '',
   });
+  const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
-  const handleSubmit = (e) => {
+  const validate = () => {
+    const next = {};
+    if (!formData.name.trim()) next.name = 'Please enter your name';
+    if (!formData.email.trim()) next.email = 'Please enter your email';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) next.email = 'Enter a valid email';
+    if (!formData.message.trim()) next.message = 'Please tell us about your event';
+    return next;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
+    const next = validate();
+    if (Object.keys(next).length) {
+      setErrors(next);
+      const first = Object.keys(next)[0];
+      document.getElementById(first)?.focus();
+      return;
+    }
+    setSubmitting(true);
+    await new Promise((r) => setTimeout(r, 600));
     console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will get back to you soon.');
+    setSubmitting(false);
+    setSubmitted(true);
     setFormData({ name: '', email: '', phone: '', message: '' });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <div className="inline-block mb-6">
-            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
-              <span className="text-3xl text-white">📞</span>
-            </div>
-          </div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Contact Us
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Get in touch with us for all your floral needs. We're here to help make your special moments unforgettable.
+    <div className="min-h-screen bg-[var(--paper)]">
+      <section className="relative overflow-hidden bg-[var(--ink)] px-4 py-20 text-white sm:px-6 lg:px-8">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse at 20% 80%, rgba(63,143,126,0.35), transparent 45%)',
+          }}
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-7xl">
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-[var(--champagne-soft)]">
+            Get in touch
+          </p>
+          <h1 className="font-display text-5xl font-semibold sm:text-6xl md:text-7xl">Contact</h1>
+          <p className="mt-4 max-w-xl text-lg text-white/70">
+            Share your date, venue, and vision — we&apos;ll respond within a day with ideas and a quote.
           </p>
         </div>
+      </section>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Information Card */}
-          <div className="space-y-8">
-            <div className="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                <span className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white text-sm">📍</span>
-                </span>
-                Contact Information
-              </h2>
-              
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4 p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-lg">📞</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                    <div className="space-y-1">
-                      <a href="tel:+917338046069" className="text-gray-600 block">+(91) 7338046069</a>
-                      <a href="tel:+919845496940" className="text-gray-600 block">+(91) 9845496940</a>
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-2">
+          <div className="space-y-6">
+            <Reveal>
+              <div className="rounded-3xl border border-[var(--ink)]/6 bg-white p-7 sm:p-8">
+                <h2 className="font-display text-2xl font-semibold text-[var(--ink)]">
+                  Studio details
+                </h2>
+                <ul className="mt-6 space-y-5">
+                  <li className="flex gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--mist)] text-[var(--sage)]">
+                      <Phone className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <div>
+                      <p className="text-sm font-semibold text-[var(--ink)]">Phone</p>
+                      <a href="tel:+917338046069" className="block text-[var(--muted)] hover:text-[var(--sage)]">
+                        +91 73380 46069
+                      </a>
+                      <a href="tel:+919845496940" className="block text-[var(--muted)] hover:text-[var(--sage)]">
+                        +91 98454 96940
+                      </a>
+                      <p className="mt-1 text-xs text-[var(--muted)]">Available 9 AM – 7 PM</p>
                     </div>
-                    <p className="text-sm text-gray-500 mt-2">Available 9 AM - 7 PM</p>
-                  </div>
-                </div>
+                  </li>
+                  <li className="flex gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--mist)] text-[var(--sage)]">
+                      <Mail className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <div>
+                      <p className="text-sm font-semibold text-[var(--ink)]">Email</p>
+                      <a
+                        href="mailto:narensadan510@gmail.com"
+                        className="text-[var(--muted)] hover:text-[var(--sage)]"
+                      >
+                        narensadan510@gmail.com
+                      </a>
+                    </div>
+                  </li>
+                  <li className="flex gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--mist)] text-[var(--sage)]">
+                      <MapPin className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <div>
+                      <p className="text-sm font-semibold text-[var(--ink)]">Address</p>
+                      <p className="text-[var(--muted)]">
+                        #510, 14th Main Road, 4th Block, Nandini Layout, Bengaluru-560096
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </Reveal>
 
-                <div className="flex items-start space-x-4 p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-lg">✉️</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                    <a href="mailto:narensadan510@gmail.com" className="text-gray-600">narensadan510@gmail.com</a>
-                    <p className="text-sm text-gray-500">We respond within 24 hours</p>
-                  </div>
+            <Reveal delay={0.08}>
+              <div className="rounded-3xl border border-[var(--ink)]/6 bg-white p-7 sm:p-8">
+                <div className="mb-5 flex items-center gap-3">
+                  <Clock className="h-5 w-5 text-[var(--sage)]" aria-hidden="true" />
+                  <h2 className="font-display text-2xl font-semibold text-[var(--ink)]">Hours</h2>
                 </div>
-
-                <div className="flex items-start space-x-4 p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200">
-                  <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-lg">🏠</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Address</h3>
-                    <p className="text-gray-600">#510, 14th Main Road, 4th Block, Nandini Layout, Bengaluru-560096</p>
-                    <p className="text-sm text-gray-500">Visit our beautiful store</p>
-                  </div>
+                <div className="space-y-3 text-sm">
+                  {[
+                    ['Monday – Friday', '9:00 AM – 7:00 PM'],
+                    ['Saturday', '9:00 AM – 5:00 PM'],
+                    ['Sunday', '10:00 AM – 4:00 PM'],
+                  ].map(([day, hours]) => (
+                    <div
+                      key={day}
+                      className="flex items-center justify-between rounded-xl bg-[var(--paper)] px-4 py-3"
+                    >
+                      <span className="font-medium text-[var(--ink)]">{day}</span>
+                      <span className="text-[var(--muted)]">{hours}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
+            </Reveal>
+          </div>
 
-            {/* Business Hours Card */}
-            <div className="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                <span className="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-600 rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white text-sm">🕒</span>
-                </span>
-                Business Hours
+          <Reveal delay={0.1}>
+            <div className="rounded-3xl border border-[var(--ink)]/6 bg-white p-7 sm:p-8">
+              <h2 className="font-display text-2xl font-semibold text-[var(--ink)]">
+                Send a message
               </h2>
-              
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
-                  <span className="font-medium text-gray-700">Monday - Friday</span>
-                  <span className="text-gray-600">9:00 AM - 7:00 PM</span>
-                </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
-                  <span className="font-medium text-gray-700">Saturday</span>
-                  <span className="text-gray-600">9:00 AM - 5:00 PM</span>
-                </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
-                  <span className="font-medium text-gray-700">Sunday</span>
-                  <span className="text-gray-600">10:00 AM - 4:00 PM</span>
-                </div>
-              </div>
-            </div>
-          </div>
+              <p className="mt-2 text-sm text-[var(--muted)]">
+                Fields marked * are required.
+              </p>
 
-          {/* Contact Form */}
-          <div className="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-              <span className="w-8 h-8 bg-gradient-to-br from-pink-500 to-rose-600 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white text-sm">💬</span>
-              </span>
-              Send us a Message
-            </h2>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                    placeholder="Your full name"
-                  />
+              {submitted ? (
+                <div className="mt-10 flex flex-col items-center py-10 text-center">
+                  <CheckCircle2 className="mb-4 h-12 w-12 text-[var(--sage)]" aria-hidden="true" />
+                  <h3 className="font-display text-2xl font-semibold text-[var(--ink)]">
+                    Message sent
+                  </h3>
+                  <p className="mt-2 max-w-sm text-sm text-[var(--muted)]">
+                    Thank you — we&apos;ll get back to you soon.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setSubmitted(false)}
+                    className="btn-primary mt-6"
+                  >
+                    Send another
+                  </button>
                 </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                    placeholder="your@email.com"
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                  placeholder="+(91) 9999999999"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-none"
-                  placeholder="Tell us about your event and how we can help..."
-                />
-              </div>
-              
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
-              >
-                Send Message
-              </button>
-            </form>
-          </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="mt-6 space-y-5" noValidate>
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-[var(--ink)]">
+                        Full name *
+                      </label>
+                      <input
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="input-field"
+                        placeholder="Your name"
+                        aria-invalid={!!errors.name}
+                        aria-describedby={errors.name ? 'name-error' : undefined}
+                      />
+                      {errors.name && (
+                        <p id="name-error" className="mt-1 text-xs text-red-600">
+                          {errors.name}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-[var(--ink)]">
+                        Email *
+                      </label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="input-field"
+                        placeholder="you@email.com"
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? 'email-error' : undefined}
+                      />
+                      {errors.email && (
+                        <p id="email-error" className="mt-1 text-xs text-red-600">
+                          {errors.email}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-[var(--ink)]">
+                      Phone
+                    </label>
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="input-field"
+                      placeholder="+91 …"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-[var(--ink)]">
+                      Message *
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={5}
+                      value={formData.message}
+                      onChange={handleChange}
+                      className="input-field resize-none"
+                      placeholder="Event type, date, venue, colour preferences…"
+                      aria-invalid={!!errors.message}
+                      aria-describedby={errors.message ? 'message-error' : undefined}
+                    />
+                    {errors.message && (
+                      <p id="message-error" className="mt-1 text-xs text-red-600">
+                        {errors.message}
+                      </p>
+                    )}
+                  </div>
+                  <button type="submit" disabled={submitting} className="btn-primary w-full !rounded-xl">
+                    {submitting ? 'Sending…' : 'Send message'}
+                  </button>
+                </form>
+              )}
+            </div>
+          </Reveal>
         </div>
       </div>
     </div>

@@ -1,146 +1,130 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 import { getCoverImage } from '../utils/galleryImages';
+import Reveal from '../components/Reveal';
+
+const galleryItems = [
+  {
+    id: 1,
+    title: 'Gruhapravesha Ceremony',
+    description: 'Sacred décor for house warming with traditional floral elements.',
+    eventType: 'gruhapravesha',
+    image: getCoverImage('HouseWarming'),
+  },
+  {
+    id: 2,
+    title: 'Birthday Celebrations',
+    description: 'Colourful blooms crafted to celebrate special days.',
+    eventType: 'birthday',
+    image: getCoverImage('Birthday'),
+  },
+  {
+    id: 3,
+    title: 'Naming Ceremony',
+    description: 'Gentle whites and greenery for blessings of the newborn.',
+    eventType: 'cradle',
+    image: getCoverImage('NamingCeremony'),
+  },
+  {
+    id: 4,
+    title: 'Seemantham Decor',
+    description: 'Festive blooms honouring motherhood and auspicious beginnings.',
+    eventType: 'seemantham',
+    image: getCoverImage('BabyShower'),
+  },
+  {
+    id: 5,
+    title: 'Engagement Decor',
+    description: 'Romantic setups for love and togetherness.',
+    eventType: 'engagement',
+    image: getCoverImage('Engagement'),
+  },
+  {
+    id: 6,
+    title: 'Sangeet Decor',
+    description: 'Vibrant marigolds and festive accents for the night of song.',
+    eventType: 'sangeet',
+    image: getCoverImage('Sangeet'),
+  },
+  {
+    id: 7,
+    title: 'Wedding Decorations',
+    description: 'Grand floral arches and mandaps for an unforgettable day.',
+    eventType: 'wedding',
+    image: getCoverImage('Wedding'),
+  },
+];
 
 const Gallery = () => {
   const navigate = useNavigate();
 
-  // Sample gallery items - you can replace these with actual images
-  const galleryItems = [
-    { 
-      id: 1, 
-      title: "Gruhapravesha Ceremony", 
-      description: "Sacred decorations for house warming ceremony with traditional elements.",
-      eventType: "gruhapravesha",
-      image: getCoverImage('HouseWarming')
-    },
-    { 
-      id: 2, 
-      title: "Birthday Celebrations", 
-      description: "A joyful burst of colorful flowers, crafted to spread smiles and celebrate special days.",
-      eventType: "birthday",
-      imageCount: 3,
-      image: getCoverImage('Birthday')
-    },
-    { 
-      id: 3, 
-      title: "Naming Ceremony", 
-      description: "Gentle white lilies and fresh greenery, representing purity and blessings for the newborn.",
-      eventType: "cradle",
-      imageCount: 2,
-      image: getCoverImage('NamingCeremony')
-    },
-    { 
-      id: 4, 
-      title: "Seemantham Decor", 
-      description: "Traditional red roses and festive blooms to honor motherhood and auspicious beginnings.",
-      eventType: "seemantham",
-      imageCount: 3,
-      image: getCoverImage('BabyShower')
-    },
-    { 
-      id: 5, 
-      title: "Engagement Decor", 
-      description: "Romantic tulips and daffodils, setting the stage for love and togetherness.",
-      eventType: "engagement",
-      imageCount: 4,
-      image: getCoverImage('Engagement')
-    },
-    { 
-      id: 6, 
-      title: "Sangeet Decor", 
-      description: "Vibrant marigolds and festive accents.",
-      eventType: "sangeet",
-      imageCount: 3,
-      image: getCoverImage('Sangeet')
-    },
-    { 
-      id: 7, 
-      title: "Wedding Decorations", 
-      description: "Grand floral arches with roses and orchids, creating an unforgettable wedding ambience.",
-      eventType: "wedding",
-      imageCount: 5,
-      image: getCoverImage('Wedding')
-    },
-    
-  ];
-
-  const handleGalleryItemClick = (eventType) => {
-    navigate(`/gallery/${eventType}`);
-  };
-  
-
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+    <div className="min-h-screen bg-[var(--paper)]">
+      <section className="relative overflow-hidden border-b border-[var(--ink)]/6 bg-[var(--ink)] px-4 py-20 text-white sm:px-6 lg:px-8">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            background:
+              'radial-gradient(ellipse at 80% 20%, rgba(63,143,126,0.5), transparent 50%)',
+          }}
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-7xl">
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-[var(--champagne-soft)]">
+            Portfolio
+          </p>
+          <h1 className="font-display text-5xl font-semibold sm:text-6xl md:text-7xl">
             Our Gallery
           </h1>
-          <p className="text-xl text-gray-600">
-            Explore our beautiful collection of floral arrangements
+          <p className="mt-4 max-w-lg text-lg text-white/70">
+            Explore floral arrangements across ceremonies — tap a collection to open the full set.
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {galleryItems.map((item) => (
-            <div 
-              key={item.id} 
-              role="button"
-              tabIndex={0}
-              onClick={() => handleGalleryItemClick(item.eventType)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  handleGalleryItemClick(item.eventType);
-                }
-              }}
-              aria-label={`View ${item.title} gallery`}
-              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105 group focus:outline-none focus:ring-2 focus:ring-[#52ab98]/50"
-            >
-              <div className="relative h-64 bg-gradient-to-br from-pink-200 to-purple-200 flex items-center justify-center overflow-hidden">
-                {item.image ? (
-                  <img 
-                    src={item.image} 
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                ) : (
-                  <div className="text-center text-gray-600">
-                    <div className="text-4xl mb-2 group-hover:scale-110 transition-transform duration-300">🌸</div>
-                    <p className="text-sm">Click to View Photos</p>
-                  </div>
-                )}
-                {/* Photo Count Badge */}
-               
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="bg-white rounded-full p-3 shadow-lg">
-                    <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  </div>
+      </section>
+
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {galleryItems.map((item, index) => (
+            <Reveal key={item.id} delay={Math.min(index * 0.06, 0.3)}>
+              <button
+                type="button"
+                onClick={() => navigate(`/gallery/${item.eventType}`)}
+                aria-label={`View ${item.title} gallery`}
+                className="group w-full overflow-hidden rounded-2xl border border-[var(--ink)]/6 bg-white text-left transition-shadow duration-300 hover:shadow-[0_24px_60px_-28px_rgba(14,47,54,0.4)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sage)]"
+              >
+                <div className="relative aspect-[16/11] overflow-hidden bg-[var(--mist)]">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-[var(--muted)]">
+                      Photos coming soon
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-[var(--ink)]/0 transition-colors duration-300 group-hover:bg-[var(--ink)]/20" />
+                  <span className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-[var(--ink)] opacity-0 shadow-lg transition-all duration-300 group-hover:opacity-100">
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </span>
                 </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 transition-colors duration-300 group-hover:text-[#2b6777]">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  {item.description}
-                </p>
-                <div className="flex items-center justify-between">
-                 
-                  <div className="flex items-center text-sm font-medium text-[#2b6777] group-hover:text-[#52ab98]">
-                    View Gallery
-                    <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
+                <div className="p-6">
+                  <h2 className="font-display text-2xl font-semibold text-[var(--ink)] transition-colors group-hover:text-[var(--sage)]">
+                    {item.title}
+                  </h2>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                    {item.description}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[var(--sage)]">
+                    View gallery
+                    <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </span>
                 </div>
-              </div>
-            </div>
+              </button>
+            </Reveal>
           ))}
         </div>
       </div>

@@ -1,213 +1,223 @@
-import React, { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Search, X, SlidersHorizontal, PackageOpen } from "lucide-react";
+import React, { useMemo, useState, lazy, Suspense } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Search, X, SlidersHorizontal, PackageOpen, ArrowUpRight, Star } from 'lucide-react';
+import { motion } from 'framer-motion';
 import {
   getGalleryFolders,
   getCoverImage,
   getGalleryImages,
   formatFolderName,
-} from "../utils/galleryImages";
+} from '../utils/galleryImages';
+import Reveal from './Reveal';
 
-// Folders already represented above by a hand-crafted card, or used elsewhere
-// as venue galleries (not event categories). Any other folder added under
-// src/assets automatically gets its own card below.
+const PetalField = lazy(() => import('./PetalField'));
+
 const HANDLED_FOLDERS = new Set([
-  "HouseWarming",
-  "Wedding",
-  "Birthday",
-  "Sangeet",
-  "NamingCeremony",
-  "Engagement",
-  "BabyShower",
-  "Nandini",
-  "Ksba",
+  'HouseWarming',
+  'Wedding',
+  'Birthday',
+  'Sangeet',
+  'NamingCeremony',
+  'Engagement',
+  'BabyShower',
+  'Nandini',
+  'Ksba',
 ]);
 
-// Proper ceremony sequence for the auto-generated cards (welcoming first, then
-// following the traditional flow). Folders not listed here are appended after,
-// in alphabetical order. Names must match the folder names under src/assets.
 const EVENT_ORDER = [
-  "Welcoming Bride and Groom",
-  "Lagna Patrike",
-  "Kobbari Mithai or Sweets",
-  "Devara Samaradhane",
-  "Chapara",
-  "Hoovilya",
-  "Mane Devru Pooje",
-  "Kashi Yatre",
-  "Gowri Pooja",
-  "Muhurtam (Jeerige Bella)",
-  "Sapthapadi",
-  "Sathyanarayana Pooja",
-  "Return gifts",
+  'Welcoming Bride and Groom',
+  'Lagna Patrike',
+  'Kobbari Mithai or Sweets',
+  'Devara Samaradhane',
+  'Chapara',
+  'Hoovilya',
+  'Mane Devru Pooje',
+  'Kashi Yatre',
+  'Gowri Pooja',
+  'Muhurtam (Jeerige Bella)',
+  'Sapthapadi',
+  'Sathyanarayana Pooja',
+  'Return gifts',
 ];
 
+const curatedEvents = [
+  { title: 'All Events', href: '/gallery', folder: null, subtitle: 'Full collection' },
+  { title: 'Marriage', href: '/gallery/wedding', folder: 'Wedding', subtitle: 'Wedding décor' },
+  { title: 'Birthday', href: '/gallery/birthday', folder: 'Birthday', subtitle: 'Celebrations' },
+  { title: 'Sangeet', href: '/gallery/sangeet', folder: 'Sangeet', subtitle: 'Festive nights' },
+  { title: 'Naming Ceremony', href: '/gallery/cradle', folder: 'NamingCeremony', subtitle: 'Blessings' },
+  { title: 'Engagement', href: '/gallery/engagement', folder: 'Engagement', subtitle: 'Beginnings' },
+  { title: 'Baby Shower', href: '/gallery/seemantham', folder: 'BabyShower', subtitle: 'Seemantham' },
+  { title: 'Gruhapravesha', href: '/gallery/gruhapravesha', folder: 'HouseWarming', subtitle: 'New homes' },
+];
+
+const decorations = [
+  {
+    id: 1,
+    title: 'Honganasu Party Hall',
+    description: 'Versatile hall with themed décor and vibrant celebrations.',
+    image: 'https://lh3.googleusercontent.com/p/AF1QipNPSEc88Vo3g9leSKB_5Mg6YtimueCQcftnriih=s1360-w1360-h1020-rw',
+    tags: ['Engagement', 'Baby Shower', 'Birthday'],
+    rating: 4.9,
+    priceStart: '₹3,500',
+    priceRange: '₹3,500 - ₹10,000',
+    productDetails: [
+      'Height: 10 ft Backdrop',
+      'Material: Teak wood & silk',
+      'Includes fresh marigold flower decorations',
+      'Customizable color theme to match event decor',
+      'Intricate traditional carvings on pillars',
+      'Optional lighting setup for evening ceremonies',
+    ],
+  },
+  {
+    id: 2,
+    title: 'Hotel Nandini',
+    description: 'Elegant halls with floral arches and creative décor for every event.',
+    image: 'https://nandhini.com/wp-content/uploads/2022/10/nandhini-logo-removebg-preview-e1666141300990.png',
+    tags: ['Restaurant', 'Party', 'Modern Style'],
+    rating: 4.8,
+    priceStart: '₹1000',
+    priceRange: '₹1000 - ₹8,500',
+    productDetails: [],
+  },
+  {
+    id: 3,
+    title: 'KSBA',
+    description: 'An association known for elegant coastal-themed decorations',
+    image: 'https://www.myksba.com/img/carousel-1.jpg',
+    tags: ['Wedding'],
+    rating: 4.7,
+    priceStart: '₹1,200',
+    priceRange: '₹1,200 - ₹2,000',
+    productDetails: [],
+  },
+  {
+    id: 4,
+    title: "Chairman's Club",
+    description: 'A premier club known for stylish birthday decorations and themes.',
+    image: 'https://lh3.googleusercontent.com/p/AF1QipNJFro43Gl6XmD4hnZ3f01s6ApDaqNfQpsx5DOj=s1360-w1360-h1020-rw',
+    tags: ['Popular', 'Birthday'],
+    rating: 4.6,
+    priceStart: '₹300',
+    priceRange: '₹300 - ₹800',
+    productDetails: [],
+  },
+  {
+    id: 5,
+    title: 'Superhero Party Decor',
+    description: 'Action-packed superhero themed decoration',
+    image: 'https://images.unsplash.com/photo-1637724562261-5777b67c59b2?q=80&w=1170&auto=format&fit=crop',
+    tags: ['Birthday'],
+    rating: 4.5,
+    priceStart: '₹250',
+    priceRange: '₹250 - ₹600',
+    productDetails: [],
+  },
+  {
+    id: 6,
+    title: 'Elegant Birthday',
+    description: 'Sophisticated black and gold theme for adults',
+    image: 'https://images.unsplash.com/photo-1626149136691-78e3977b3d69?q=80&w=1150&auto=format&fit=crop',
+    tags: ['Popular', 'Birthday'],
+    rating: 4.8,
+    priceStart: '₹400',
+    priceRange: '₹400 - ₹1,000',
+    productDetails: [],
+  },
+  {
+    id: 7,
+    title: 'Anniversary Setup',
+    description: 'Luxurious golden anniversary celebration',
+    image: 'https://plus.unsplash.com/premium_photo-1670333351949-47f735fa9ba4?q=80&w=765&auto=format&fit=crop',
+    tags: ['Popular', 'Anniversary'],
+    rating: 4.9,
+    priceStart: '₹1,500',
+    priceRange: '₹1,500 - ₹3,000',
+    productDetails: [],
+  },
+  {
+    id: 8,
+    title: 'Silver Jubilee Decor',
+    description: 'Classic silver themed decoration for 25th anniversary',
+    image: 'https://i.pinimg.com/736x/c8/d6/6f/c8d66f7cef63a3fc5d1fa231d2979c7f.jpg',
+    tags: ['Anniversary'],
+    rating: 4.7,
+    priceStart: '₹800',
+    priceRange: '₹800 - ₹1,800',
+    productDetails: [],
+  },
+];
+
+const EventCard = ({ title, href, image, subtitle, count, index }) => (
+  <Reveal delay={Math.min(index * 0.05, 0.35)}>
+    <Link
+      to={href}
+      className="group relative block overflow-hidden rounded-2xl bg-[var(--ink)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sage)] focus-visible:ring-offset-2"
+    >
+      <div className="aspect-[4/5] overflow-hidden sm:aspect-[3/4]">
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+        ) : (
+          <div
+            className="flex h-full w-full items-center justify-center"
+            style={{ background: 'linear-gradient(145deg, #1a4a54, #3f8f7e)' }}
+          >
+            <span className="font-display text-5xl text-white/90">✦</span>
+          </div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)] via-[var(--ink)]/35 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-95" />
+      </div>
+      <div className="absolute inset-x-0 bottom-0 p-5">
+        <p className="mb-1 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-[var(--champagne-soft)]">
+          {subtitle}
+          {typeof count === 'number' ? ` · ${count}` : ''}
+        </p>
+        <div className="flex items-end justify-between gap-2">
+          <h3 className="font-display text-2xl font-semibold text-white sm:text-[1.65rem]">{title}</h3>
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-sm transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+      </div>
+    </Link>
+  </Reveal>
+);
+
 const ListOfItems = () => {
-  // State for search functionality
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedStyle, setSelectedStyle] = useState("All Styles");
-  const navigate = useNavigate()
-  // Decoration data array
-  const decorations = [
-    {
-      id: 1,
-      title: "Honganasu Party Hall",
-      description: "Versatile hall with themed décor and vibrant celebrations.",
-      image: "https://lh3.googleusercontent.com/p/AF1QipNPSEc88Vo3g9leSKB_5Mg6YtimueCQcftnriih=s1360-w1360-h1020-rw",
-      tags: ["Engagement", "Baby Shower", "Birthday"],
-      rating: 4.9,
-      priceStart: "₹3,500",
-      priceRange: "₹3,500 - ₹10,000",
-      gradient: "from-yellow-200 to-orange-300",
-      productDetails: [
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStyle, setSelectedStyle] = useState('All Styles');
+  const navigate = useNavigate();
 
-        "Height: 10 ft Backdrop",
-      "Material: Teak wood & silk",
-      "Includes fresh marigold flower decorations",
-      "Customizable color theme to match event decor",
-      "Intricate traditional carvings on pillars",
-      "Optional lighting setup for evening ceremonies"
-
-      ]
-    },
-    {
-      id: 2,
-      title: "Hotel Nandini",
-      description: "Elegant halls with floral arches and creative décor for every event.",
-      image: "https://nandhini.com/wp-content/uploads/2022/10/nandhini-logo-removebg-preview-e1666141300990.png",
-      tags: ["Restaurant", "Party", "Modern Style"],
-      rating: 4.8,
-      priceStart: "₹1000",
-      priceRange: "₹1000 - ₹8,500",
-      gradient: "from-pink-200 to-green-300",
-      productDetails: [
-
-      ]
-    },
-    {
-      id: 3,
-      title: "KSBA",
-      description: "An association known for elegant coastal-themed decorations",
-      image: "https://www.myksba.com/img/carousel-1.jpg",
-      tags: ["Wedding"],
-      rating: 4.7,
-      priceStart: "₹1,200",
-      priceRange: "₹1,200 - ₹2,000",
-      gradient: "from-blue-200 to-cyan-300",
-      productDetails: [
-
-      ]
-    },
-    {
-      id: 4,
-      title: "Chairman's Club",
-      description: "A premier club known for stylish birthday decorations and themes.",
-      image: "https://lh3.googleusercontent.com/p/AF1QipNJFro43Gl6XmD4hnZ3f01s6ApDaqNfQpsx5DOj=s1360-w1360-h1020-rw",
-      tags: ["Popular", "Birthday"],
-      rating: 4.6,
-      priceStart: "₹300",
-      priceRange: "₹300 - ₹800",
-      gradient: "from-pink-200 to-purple-300",
-      productDetails: [
-
-
-      ]
-    },
-    {
-      id: 5,
-      title: "Superhero Party Decor",
-      description: "Action-packed superhero themed decoration",
-      image: "https://images.unsplash.com/photo-1637724562261-5777b67c59b2?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      tags: ["Birthday"],
-      rating: 4.5,
-      priceStart: "₹250",
-      priceRange: "₹250 - ₹600",
-      gradient: "from-blue-200 to-red-300",
-      productDetails: [
-
-       
-      ]
-    },
-    {
-      id: 6,
-      title: "Elegant Birthday",
-      description: "Sophisticated black and gold theme for adults",
-      image: "https://images.unsplash.com/photo-1626149136691-78e3977b3d69?q=80&w=1150&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      tags: ["Popular", "Birthday"],
-      rating: 4.8,
-      priceStart: "₹400",
-      priceRange: "₹400 - ₹1,000",
-      gradient: "from-gray-200 to-yellow-200",
-      productDetails: [
-
-       
-
-      ]
-    },
-    {
-      id: 7,
-      title: "Anniversary Setup",
-      description: "Luxurious golden anniversary celebration",
-      image: "https://plus.unsplash.com/premium_photo-1670333351949-47f735fa9ba4?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      tags: ["Popular", "Anniversary"],
-      rating: 4.9,
-      priceStart: "₹1,500",
-      priceRange: "₹1,500 - ₹3,000",
-      gradient: "from-yellow-200 to-orange-300",
-      productDetails: [
-
-
-      ]
-    },
-    {
-      id: 8,
-      title: "Silver Jubilee Decor",
-      description: "Classic silver themed decoration for 25th anniversary",
-      image: "https://i.pinimg.com/736x/c8/d6/6f/c8d66f7cef63a3fc5d1fa231d2979c7f.jpg",
-      tags: ["Anniversary"],
-      rating: 4.7,
-      priceStart: "₹800",
-      priceRange: "₹800 - ₹1,800",
-      gradient: "from-gray-200 to-blue-200",
-      productDetails: [
-
-
-      ]
-    }
-  ];
-
-  // Build the list of available styles from the decoration tags
   const styleOptions = useMemo(() => {
     const tags = new Set();
-    decorations.forEach((decoration) => decoration.tags.forEach((tag) => tags.add(tag)));
-    return ["All Styles", ...Array.from(tags).sort()];
-  }, [decorations]);
+    decorations.forEach((d) => d.tags.forEach((tag) => tags.add(tag)));
+    return ['All Styles', ...Array.from(tags).sort()];
+  }, []);
 
-  // Filter decorations based on search term and selected style
   const query = searchTerm.trim().toLowerCase();
   const filteredDecorations = decorations.filter((decoration) => {
     const matchesSearch =
-      query === "" ||
+      query === '' ||
       decoration.title.toLowerCase().includes(query) ||
       decoration.description.toLowerCase().includes(query) ||
       decoration.tags.some((tag) => tag.toLowerCase().includes(query));
-
     const matchesStyle =
-      selectedStyle === "All Styles" || decoration.tags.includes(selectedStyle);
-
+      selectedStyle === 'All Styles' || decoration.tags.includes(selectedStyle);
     return matchesSearch && matchesStyle;
   });
 
-  const hasActiveFilters = query !== "" || selectedStyle !== "All Styles";
-
-  // Clear filters function
+  const hasActiveFilters = query !== '' || selectedStyle !== 'All Styles';
   const clearFilters = () => {
-    setSearchTerm("");
-    setSelectedStyle("All Styles");
+    setSearchTerm('');
+    setSelectedStyle('All Styles');
   };
 
-  // Any newly-added asset folder that isn't already a hand-crafted card,
-  // ordered by the ceremony sequence (unknown folders sorted alphabetically last).
   const extraEventFolders = useMemo(() => {
     const orderOf = (folder) => {
       const index = EVENT_ORDER.indexOf(folder);
@@ -219,445 +229,283 @@ const ListOfItems = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <div className="relative text-white px-6 py-4 overflow-hidden" style={{ background: 'linear-gradient(135deg, #2b6777 0%, #52ab98 50%, #c8d8e4 100%)' }}>
-        {/* Background decorations */}
-        <div className="absolute top-5 left-10 w-12 h-12 bg-white/10 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute top-16 right-20 w-24 h-24 bg-white/5 rounded-full blur-2xl animate-pulse delay-1000"></div>
-        <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-white/10 rounded-full blur-xl animate-pulse delay-500"></div>
-
-        <div className="relative max-w-6xl mx-auto">
-          {/* Badge */}
-          <div className="flex items-center justify-center gap-2 mb-4 animate-fade-in">
-            <span className="text-2xl animate-bounce">🎉</span>
-
-          </div>
-
-          {/* Hero Content */}
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-5xl font-bold mb-2 text-white animate-slide-up">
-              Beautiful Decorations
-            </h1>
-            <p className="text-lg md:text-xl font-light mb-4 text-white/95 animate-slide-up delay-200">
-              For Every Celebration
-            </p>
-            <p className="text-base text-white/90 mb-6 max-w-2xl mx-auto leading-relaxed animate-slide-up delay-300">
-              Transform your special moments into unforgettable memories.
-            </p>
-          </div>
+    <div className="min-h-screen">
+      {/* Hero — brand-first, full-bleed */}
+      <section className="grain relative flex min-h-[88vh] items-end overflow-hidden bg-[var(--ink)] text-white sm:min-h-[92vh]">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 60% at 70% 20%, rgba(63,143,126,0.35), transparent 55%), radial-gradient(ellipse 50% 40% at 15% 80%, rgba(196,165,116,0.18), transparent 50%), linear-gradient(160deg, #0e2f36 0%, #163f48 45%, #1a4a54 100%)',
+          }}
+        />
+        <Suspense fallback={null}>
+          <PetalField />
+        </Suspense>
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-16 pt-28 sm:px-6 sm:pb-24 lg:px-8">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-4 text-xs font-medium uppercase tracking-[0.35em] text-[var(--champagne-soft)]"
+          >
+            Bengaluru · Est. floral atelier
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="font-display max-w-4xl text-5xl font-semibold leading-[0.95] sm:text-6xl md:text-7xl lg:text-8xl"
+          >
+            Sri Venkateshwara
+            <span className="mt-2 block italic text-[var(--sage-light)]">Florist</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-6 max-w-md text-base text-white/75 sm:text-lg"
+          >
+            Ceremony décor shaped with flowers, light, and tradition — for every sacred step of your celebration.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-10 flex flex-wrap gap-3"
+          >
+            <Link to="/gallery" className="btn-primary-light">
+              Explore gallery
+            </Link>
+            <Link to="/contact" className="btn-ghost">
+              Plan your event
+            </Link>
+          </motion.div>
         </div>
-      </div>
-      {/* Browse by Events Section */}
-      <div className="py-12 px-6" style={{ backgroundColor: '#f2f2f2' }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <div className="inline-block mb-4">
-              <span className="text-4xl">🎨</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#2b6777' }}>
-              Browse by Event Type
-            </h2>
-            <p className="text-lg max-w-xl mx-auto leading-relaxed" style={{ color: '#2b6777' }}>
-              Choose from our curated collection of decorations for different occasions.
-              Each design is crafted with love and attention to detail.
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--paper)] to-transparent" />
+      </section>
+
+      {/* Browse by event */}
+      <section className="relative z-10 -mt-8 px-4 pb-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="mb-10 max-w-2xl">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[var(--sage)]">
+              Collections
             </p>
-          </div>
+            <h2 className="font-display text-4xl font-semibold text-[var(--ink)] sm:text-5xl">
+              Browse by ceremony
+            </h2>
+            <p className="mt-3 text-[var(--muted)]">
+              From welcoming the couple to return gifts — each ritual, styled with care.
+            </p>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <a href="/gallery" rel="noopener noreferrer">
-               <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer border-2 shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden" style={{ borderColor: '#52ab98' }}>
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(135deg, #c8d8e4, #f2f2f2)' }}></div>
-              <div className="relative">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300" style={{ background: 'linear-gradient(135deg, #2b6777, #52ab98)' }}>
-                  <span className="text-3xl text-white">✨</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2 transition-colors duration-300" style={{ color: '#2b6777' }}>All Events</h3>
-                <p className="text-base font-medium" style={{ color: '#2b6777' }}>100+ designs</p>
-                <div className="mt-4 w-full rounded-full h-2" style={{ backgroundColor: '#c8d8e4' }}>
-                  <div className="h-2 rounded-full w-full" style={{ background: 'linear-gradient(90deg, #2b6777, #52ab98)' }}></div>
-                </div>
-              </div>
-            </div>
-            </a>
-           
-          <a href="/gallery/wedding" rel="noopener noreferrer">
-            <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-50 to-red-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-red-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl text-white">💕</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-pink-600 transition-colors duration-300">Marriage</h3>
-                <p className="text-gray-600 text-base font-medium">20+ designs</p>
-                <div className="mt-4 w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-pink-400 to-red-400 h-2 rounded-full w-1/4"></div>
-                </div>
-              </div>
-            </div>
-
-          </a>
-            
-            <a href="/gallery/birthday" rel="noopener noreferrer">
-            <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-yellow-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-yellow-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl text-white">🎂</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-orange-600 transition-colors duration-300">Birthday</h3>
-                <p className="text-gray-600 text-base font-medium">20+ designs</p>
-                <div className="mt-4 w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-orange-400 to-yellow-400 h-2 rounded-full w-1/4"></div>
-                </div>
-              </div>
-            </div>
-            </a>
-            
-            <a href="/gallery/sangeet" rel="noopener noreferrer">
-            <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
-              {/* Hover background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-yellow-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              <div className="relative">
-                {/* Icon */}
-                <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-pink-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl text-white">💃</span>
-                </div>
-
-                {/* Title and description */}
-                <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-yellow-600 transition-colors duration-300">Sangeet</h3>
-                <p className="text-gray-600 text-base font-medium">10+ design</p>
-
-                {/* Progress bar */}
-                <div className="mt-4 w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-yellow-400 to-pink-400 h-2 rounded-full w-1/12"></div>
-                </div>
-              </div>
-            </div>
-            </a>
-            
-
-            <a href="/gallery/cradle" rel="noopener noreferrer">
-            <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-cyan-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl text-white">👶</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors duration-300">Naming Ceremony</h3>
-                <p className="text-gray-600 text-base font-medium">20+ designs</p>
-                <div className="mt-4 w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-blue-400 to-cyan-400 h-2 rounded-full w-1/6"></div>
-                </div>
-              </div>
-            </div></a>
-            
-
-            <a href="/gallery/engagement" rel="noopener noreferrer">
-             <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-50 to-rose-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-rose-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl text-white">💍</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-pink-600 transition-colors duration-300">Engagement</h3>
-                <p className="text-gray-600 text-base font-medium">20+ design</p>
-                <div className="mt-4 w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-pink-400 to-rose-400 h-2 rounded-full w-1/12"></div>
-                </div>
-              </div>
-            </div></a>
-           
-            <a href="/gallery/seemantham" rel="noopener noreferrer">
-             <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
-              {/* Hover background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              <div className="relative">
-                {/* Icon */}
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-pink-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl text-white">👶</span>
-                </div>
-
-                {/* Title and description */}
-                <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors duration-300">Baby Shower</h3>
-                <p className="text-gray-600 text-base font-medium">20+ design</p>
-
-                {/* Progress bar */}
-                <div className="mt-4 w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-blue-400 to-pink-400 h-2 rounded-full w-1/12"></div>
-                </div>
-              </div>
-            </div></a>
-           
-
-            <a href="/gallery/gruhapravesha" rel="noopener noreferrer">
-            <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-yellow-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-yellow-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl text-white">🏠</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-orange-600 transition-colors duration-300">Gruhapravesha</h3>
-                <p className="text-gray-600 text-base font-medium">20+ design</p>
-                <div className="mt-4 w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-orange-400 to-yellow-400 h-2 rounded-full w-1/12"></div>
-                </div>
-              </div>
-            </div></a>
-
-            {/* Auto-generated cards for any new folder added under src/assets */}
-            {extraEventFolders.map((folder) => {
+          <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
+            {curatedEvents.map((event, index) => (
+              <EventCard
+                key={event.href}
+                index={index}
+                title={event.title}
+                href={event.href}
+                subtitle={event.subtitle}
+                image={event.folder ? getCoverImage(event.folder) : getCoverImage('Wedding')}
+                count={event.folder ? getGalleryImages(event.folder).length : undefined}
+              />
+            ))}
+            {extraEventFolders.map((folder, index) => {
               const count = getGalleryImages(folder).length;
-              const cover = getCoverImage(folder);
               return (
-                <a key={folder} href={`/gallery/${folder}`} rel="noopener noreferrer">
-                  <div className="group bg-white rounded-2xl p-6 text-center hover:shadow-2xl transition-all duration-500 cursor-pointer shadow-lg hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(135deg, #c8d8e4, #f2f2f2)' }}></div>
-                    <div className="relative">
-                      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl shadow-lg transition-transform duration-300 group-hover:scale-110" style={{ background: 'linear-gradient(135deg, #2b6777, #52ab98)' }}>
-                        {cover ? (
-                          <img
-                            src={cover}
-                            alt={formatFolderName(folder)}
-                            loading="lazy"
-                            className="h-full w-full object-cover"
-                          />
-                        ) : (
-                          <span className="text-3xl text-white">🎉</span>
-                        )}
-                      </div>
-                      <h3 className="mb-2 text-xl font-bold transition-colors duration-300" style={{ color: '#2b6777' }}>
-                        {formatFolderName(folder)}
-                      </h3>
-                      <p className="text-base font-medium" style={{ color: '#2b6777' }}>
-                        {count} {count === 1 ? 'design' : 'designs'}
-                      </p>
-                      <div className="mt-4 h-2 w-full rounded-full" style={{ backgroundColor: '#c8d8e4' }}>
-                        <div className="h-2 rounded-full" style={{ background: 'linear-gradient(90deg, #2b6777, #52ab98)', width: `${Math.min(100, count * 10)}%` }}></div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
+                <EventCard
+                  key={folder}
+                  index={curatedEvents.length + index}
+                  title={formatFolderName(folder)}
+                  href={`/gallery/${folder}`}
+                  subtitle={`${count} ${count === 1 ? 'design' : 'designs'}`}
+                  image={getCoverImage(folder)}
+                />
               );
             })}
-
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Find Your Perfect Decoration Section */}
+      {/* Showcase */}
+      <section className="border-t border-[var(--ink)]/6 bg-white px-4 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-xl">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[var(--sage)]">
+                Venues &amp; setups
+              </p>
+              <h2 className="font-display text-4xl font-semibold text-[var(--ink)] sm:text-5xl">
+                Decoration showcase
+              </h2>
+              <p className="mt-3 text-[var(--muted)]">
+                Search venues and themes. Open any card for details, pricing, and booking.
+              </p>
+            </div>
+          </Reveal>
 
-
-      {/* Decoration Showcase Section */}
-      <div className="bg-white py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-              Decoration Showcase
-            </h2>
-            <p className="text-lg text-gray-600">
-              Search and filter our venues and decoration setups.
-            </p>
-          </div>
-
-          {/* Search & Filter Toolbar */}
-          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <Reveal delay={0.08} className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <div className="relative w-full sm:max-w-md">
               <Search
-                className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+                className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]"
                 aria-hidden="true"
               />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search venues, events or styles..."
+                placeholder="Search venues, events, styles…"
                 aria-label="Search decorations"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-10 text-gray-800 placeholder-gray-400 transition-colors duration-200 focus:border-[#52ab98] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#52ab98]/40"
+                className="input-field !pl-11 !pr-10"
               />
               {searchTerm && (
                 <button
-                  onClick={() => setSearchTerm("")}
+                  type="button"
+                  onClick={() => setSearchTerm('')}
                   aria-label="Clear search"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#52ab98]/40"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-[var(--muted)] hover:bg-[var(--mist)]"
                 >
                   <X className="h-4 w-4" />
                 </button>
               )}
             </div>
-
-            <div className="flex items-center gap-3">
-              <label htmlFor="style-filter" className="sr-only">
-                Filter by style
-              </label>
-              <div className="relative">
-                <SlidersHorizontal
-                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
-                  aria-hidden="true"
-                />
-                <select
-                  id="style-filter"
-                  value={selectedStyle}
-                  onChange={(e) => setSelectedStyle(e.target.value)}
-                  className="appearance-none rounded-xl border border-gray-200 bg-gray-50 py-3 pl-9 pr-8 text-gray-800 transition-colors duration-200 focus:border-[#52ab98] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#52ab98]/40"
-                >
-                  {styleOptions.map((style) => (
-                    <option key={style} value={style}>
-                      {style}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {hasActiveFilters && (
-                <button
-                  onClick={clearFilters}
-                  className="rounded-xl border border-gray-200 px-4 py-3 text-sm font-medium text-gray-600 transition-colors duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#52ab98]/40"
-                >
-                  Clear
-                </button>
-              )}
+            <div className="relative">
+              <SlidersHorizontal
+                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]"
+                aria-hidden="true"
+              />
+              <select
+                id="style-filter"
+                value={selectedStyle}
+                onChange={(e) => setSelectedStyle(e.target.value)}
+                aria-label="Filter by style"
+                className="input-field appearance-none !py-3 !pl-10 !pr-8"
+              >
+                {styleOptions.map((style) => (
+                  <option key={style} value={style}>
+                    {style}
+                  </option>
+                ))}
+              </select>
             </div>
-          </div>
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="rounded-full border border-[var(--ink)]/12 px-4 py-3 text-sm font-medium text-[var(--muted)] transition-colors hover:bg-[var(--mist)]"
+              >
+                Clear
+              </button>
+            )}
+          </Reveal>
 
-          <p className="mb-6 text-sm font-medium" style={{ color: '#2b6777' }}>
-            {filteredDecorations.length} {filteredDecorations.length === 1 ? 'design' : 'designs'} found
+          <p className="mb-6 text-sm font-medium text-[var(--sage)]">
+            {filteredDecorations.length}{' '}
+            {filteredDecorations.length === 1 ? 'design' : 'designs'} found
           </p>
 
           {filteredDecorations.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-16 text-center">
-              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-                <PackageOpen className="h-8 w-8 text-gray-400" aria-hidden="true" />
+            <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-[var(--ink)]/15 bg-[var(--paper)] px-6 py-20 text-center">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--mist)]">
+                <PackageOpen className="h-7 w-7 text-[var(--muted)]" aria-hidden="true" />
               </div>
-              <h3 className="mb-1 text-lg font-semibold text-gray-800">No decorations found</h3>
-              <p className="mb-6 max-w-sm text-sm text-gray-500">
-                We couldn't find anything matching your search. Try a different keyword or clear your filters.
+              <h3 className="font-display text-2xl font-semibold text-[var(--ink)]">No matches</h3>
+              <p className="mt-2 max-w-sm text-sm text-[var(--muted)]">
+                Try another keyword or clear your filters to see all setups.
               </p>
-              <button
-                onClick={clearFilters}
-                className="rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#52ab98]/50"
-                style={{ background: 'linear-gradient(90deg, #2b6777, #52ab98)' }}
-              >
+              <button type="button" onClick={clearFilters} className="btn-primary mt-6">
                 Clear filters
               </button>
             </div>
           ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {filteredDecorations.map((decoration) => (
-              <div key={decoration.id} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
-                <div className="relative">
-                 <div className={`w-full h-48 bg-gradient-to-br ${decoration.gradient} flex items-center justify-center overflow-hidden`}>
-  <img
-    src={decoration.image}
-    alt={decoration.title}
-    className="w-full h-48 object-cover rounded-t-2xl"
-  />
-</div>
-
-
-
-                  <div className="absolute top-3 left-3 flex gap-2">
-                    {decoration.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className={`px-2 py-1 text-white text-xs font-semibold rounded-full ${tag === 'Popular' ? 'bg-red-500' :
-                          tag === 'Wedding' ? 'bg-purple-500' :
-                            tag === 'Birthday' ? 'bg-orange-500' :
-                              tag === 'Anniversary' ? 'bg-purple-500' :
-                                tag === 'Modern Style' ? 'bg-blue-500' :
-                                  'bg-gray-500'
-                          }`}
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {filteredDecorations.map((decoration, index) => (
+                <Reveal key={decoration.id} delay={Math.min(index * 0.04, 0.28)}>
+                  <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--ink)]/6 bg-[var(--paper)] transition-shadow duration-300 hover:shadow-[0_20px_50px_-24px_rgba(14,47,54,0.35)]">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-[var(--mist)]">
+                      <img
+                        src={decoration.image}
+                        alt={decoration.title}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
+                        {decoration.tags.slice(0, 2).map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full bg-white/90 px-2.5 py-1 text-[0.65rem] font-semibold text-[var(--ink)] backdrop-blur-sm"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-[var(--ink)]/80 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                        <Star className="h-3 w-3 fill-[var(--champagne)] text-[var(--champagne)]" aria-hidden="true" />
+                        {decoration.rating}
+                      </div>
+                    </div>
+                    <div className="flex flex-1 flex-col p-5">
+                      <h3 className="font-display text-xl font-semibold text-[var(--ink)]">
+                        {decoration.title}
+                      </h3>
+                      <p className="mt-1.5 line-clamp-2 text-sm text-[var(--muted)]">
+                        {decoration.description}
+                      </p>
+                      <div className="mt-4 flex-1">
+                        <p className="text-[0.65rem] uppercase tracking-wider text-[var(--muted)]">
+                          From
+                        </p>
+                        <p className="font-display text-2xl font-semibold text-[var(--ink)]">
+                          {decoration.priceStart}
+                        </p>
+                        <p className="text-xs text-[var(--muted)]">{decoration.priceRange}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          navigate('/decordetails', { state: { decoration } })
+                        }
+                        className="btn-primary mt-5 w-full !rounded-xl"
                       >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="absolute bottom-3 right-3 bg-white/90 px-2 py-1 rounded-full">
-                    <span className="text-sm font-semibold text-yellow-600">⭐ {decoration.rating}</span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">{decoration.title}</h3>
-                  <p className="text-gray-600 text-sm mb-4">{decoration.description}</p>
-                  {/* <div className="flex flex-wrap gap-2 mb-4">
-                    {decoration.colors.map((color, index) => (
-                      <span
-                        key={index}
-                        className={`px-2 py-1 text-xs rounded-full ${color === 'Gold' ? 'bg-yellow-100 text-yellow-800' :
-                          color === 'Red' ? 'bg-red-100 text-red-800' :
-                            color === 'Cream' ? 'bg-gray-100 text-gray-800' :
-                              color === 'White' ? 'bg-white border border-gray-300 text-gray-800' :
-                                color === 'Pink' ? 'bg-pink-100 text-pink-800' :
-                                  color === 'Green' ? 'bg-green-100 text-green-800' :
-                                    color === 'Blue' ? 'bg-blue-100 text-blue-800' :
-                                      color === 'Beige' ? 'bg-yellow-100 text-yellow-800' :
-                                        color === 'Purple' ? 'bg-purple-100 text-purple-800' :
-                                          color === 'Black' ? 'bg-gray-800 text-white' :
-                                            color === 'Orange' ? 'bg-orange-100 text-orange-800' :
-                                              color === 'Silver' ? 'bg-gray-100 text-gray-800' :
-                                                'bg-gray-100 text-gray-800'
-                          }`}
-                      >
-                        {color}
-                      </span>
-                    ))}
-                  </div> */}
-                  <div className="mb-4">
-                    <p className="text-sm text-gray-500">Starting from</p>
-                    <p className="text-2xl font-bold text-gray-800">{decoration.priceStart}</p>
-                    <p className="text-sm text-gray-500">Full range: {decoration.priceRange}</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={()=> navigate('/decordetails', { state: { decoration: decoration } })}
-                      className="flex-1 rounded-lg py-2.5 px-4 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#52ab98]/50"
-                      style={{ background: 'linear-gradient(90deg, #2b6777, #52ab98)' }}
-                    >
-                      View Details →
-                    </button>
-                  </div>
-
-                </div>
-              </div>
-            ))}
-          </div>
+                        View details
+                      </button>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
           )}
         </div>
-      </div>
+      </section>
 
-      {/* Call to Action Section */}
-      <div className="py-16 px-6" style={{ background: 'linear-gradient(135deg, #2b6777 0%, #52ab98 50%, #c8d8e4 100%)' }}>
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 backdrop-blur-sm rounded-full px-4 py-2 mb-8" style={{ backgroundColor: 'rgba(43, 103, 119, 0.8)' }}>
-            <span className="text-white text-sm">✓</span>
-            <span className="text-white text-sm font-medium">Ready to Decorate?</span>
-          </div>
-
-          {/* Main Heading */}
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Bring Your Vision to Life
-          </h2>
-
-          {/* Description */}
-          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Connect with professional decorators who can create these stunning setups for your special event
-          </p>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button
-              onClick={() => navigate('/contact')}
-              className="bg-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-300 shadow-lg"
-              style={{ color: '#2b6777' }}
-            >
-              Book Consultation
-            </button>
-          </div>
+      {/* CTA */}
+      <section className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(135deg, #0e2f36 0%, #1a4a54 40%, #3f8f7e 100%)',
+          }}
+        />
+        <div className="relative z-10 mx-auto max-w-3xl text-center text-white">
+          <Reveal>
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-[var(--champagne-soft)]">
+              Ready when you are
+            </p>
+            <h2 className="font-display text-4xl font-semibold sm:text-5xl md:text-6xl">
+              Bring your vision to life
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-white/75">
+              Tell us about your muhurtam, venue, and colour story — we&apos;ll craft the décor around it.
+            </p>
+            <Link to="/contact" className="btn-primary-light mt-10 inline-flex">
+              Book a consultation
+            </Link>
+          </Reveal>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
